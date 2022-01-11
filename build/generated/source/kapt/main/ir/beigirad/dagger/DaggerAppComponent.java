@@ -10,6 +10,7 @@ import ir.beigirad.dagger.module.AppModule_ProvideCapitalizerFactory;
 import ir.beigirad.dagger.module.OsInfoModule;
 import ir.beigirad.dagger.module.OsInfoModule_ProvideLibrariesPathFactory;
 import ir.beigirad.dagger.util.Context;
+import ir.beigirad.logger.LoggerComponent;
 import javax.annotation.Generated;
 import javax.inject.Provider;
 
@@ -27,6 +28,8 @@ public final class DaggerAppComponent implements AppComponent {
 
   private final AppModule appModule;
 
+  private final LoggerComponent loggerComponent;
+
   private final DaggerAppComponent appComponent = this;
 
   private Provider<Context> contextProvider;
@@ -36,10 +39,11 @@ public final class DaggerAppComponent implements AppComponent {
   private Provider<RepositoryImpl> repositoryImplProvider;
 
   private DaggerAppComponent(AppModule appModuleParam, OsInfoModule osInfoModuleParam,
-      Context contextParam) {
+      LoggerComponent loggerComponentParam, Context contextParam) {
     this.osInfoModule = osInfoModuleParam;
     this.appModule = appModuleParam;
-    initialize(appModuleParam, osInfoModuleParam, contextParam);
+    this.loggerComponent = loggerComponentParam;
+    initialize(appModuleParam, osInfoModuleParam, loggerComponentParam, contextParam);
 
   }
 
@@ -49,7 +53,7 @@ public final class DaggerAppComponent implements AppComponent {
 
   @SuppressWarnings("unchecked")
   private void initialize(final AppModule appModuleParam, final OsInfoModule osInfoModuleParam,
-      final Context contextParam) {
+      final LoggerComponent loggerComponentParam, final Context contextParam) {
     this.contextProvider = InstanceFactory.create(contextParam);
     this.provideCapitalizerProvider = AppModule_ProvideCapitalizerFactory.create(appModuleParam);
     this.repositoryImplProvider = DoubleCheck.provider(RepositoryImpl_Factory.create(contextProvider, provideCapitalizerProvider));
@@ -64,15 +68,17 @@ public final class DaggerAppComponent implements AppComponent {
     MyApplication_MembersInjector.injectRepository(instance, repositoryImplProvider.get());
     MyApplication_MembersInjector.injectOsInfo(instance, OsInfoModule_ProvideLibrariesPathFactory.provideLibrariesPath(osInfoModule));
     MyApplication_MembersInjector.injectCapitalizer(instance, AppModule_ProvideCapitalizerBFactory.provideCapitalizerB(appModule));
+    MyApplication_MembersInjector.injectLogger(instance, Preconditions.checkNotNullFromComponent(loggerComponent.exposeLogger()));
     return instance;
   }
 
   private static final class Factory implements AppComponent.Factory {
     @Override
-    public AppComponent create(Context context, OsInfoModule os) {
+    public AppComponent create(Context context, OsInfoModule os, LoggerComponent loggerComponent) {
       Preconditions.checkNotNull(context);
       Preconditions.checkNotNull(os);
-      return new DaggerAppComponent(new AppModule(), os, context);
+      Preconditions.checkNotNull(loggerComponent);
+      return new DaggerAppComponent(new AppModule(), os, loggerComponent, context);
     }
   }
 }

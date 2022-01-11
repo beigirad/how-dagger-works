@@ -6,6 +6,7 @@ import ir.beigirad.dagger.module.AppModule
 import ir.beigirad.dagger.module.DataModule
 import ir.beigirad.dagger.module.OsInfoModule
 import ir.beigirad.dagger.util.Context
+import ir.beigirad.logger.LoggerComponent
 import javax.inject.Singleton
 
 @Singleton
@@ -14,13 +15,18 @@ import javax.inject.Singleton
         AppModule::class,
         DataModule::class,
         OsInfoModule::class,
-    ]
+    ],
+    dependencies = [LoggerComponent::class]
 )
 interface AppComponent {
     fun inject(app: MyApplication)
 
     @Component.Factory
     interface Factory {
-        fun create(@BindsInstance context: Context, os: OsInfoModule): AppComponent
+        fun create(
+            @BindsInstance context: Context,
+            os: OsInfoModule,
+            loggerComponent: LoggerComponent
+        ): AppComponent
     }
 }

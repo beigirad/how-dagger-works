@@ -4,6 +4,8 @@ import ir.beigirad.dagger.module.OsInfoModule
 import ir.beigirad.dagger.qualifier.TypeB
 import ir.beigirad.dagger.util.Context
 import ir.beigirad.dagger.util.OsInfo
+import ir.beigirad.logger.DaggerLoggerComponent
+import ir.beigirad.logger.Logger
 import javax.inject.Inject
 
 class MyApplication {
@@ -17,22 +19,26 @@ class MyApplication {
     @Inject
     lateinit var capitalizer: Capitalizer
 
+    @Inject
+    lateinit var logger: Logger
+
     fun runApp() {
         val component = DaggerAppComponent.factory()
             .create(
                 context = Context(),
-                os = OsInfoModule(System.getProperties())
+                os = OsInfoModule(System.getProperties()),
+                loggerComponent = DaggerLoggerComponent.create()
             )
 
         component.inject(this)
         component.inject(this)
 
         val users = repository.getUsersName()
-        println("users: $users")
+        logger.log("users: $users")
 
-        println("osInfo: $osInfo")
+        logger.log("osInfo: $osInfo")
 
-        println(capitalizer.capitalize("hello!"))
+        logger.log(capitalizer.capitalize("hello!"))
     }
 
     companion object {
