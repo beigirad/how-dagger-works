@@ -13,10 +13,11 @@ class MyApplication {
     lateinit var osInfo: OsInfo
 
     fun runApp() {
-        DaggerAppComponent.builder()
-            .context(Context())
-            .os(OsInfoModule(System.getProperties()))
-            .build()
+        DaggerAppComponent.factory()
+            .create(
+                context = Context(),
+                os = OsInfoModule(System.getProperties())
+            )
             .inject(this)
 
         val users = repository.getUsersName()

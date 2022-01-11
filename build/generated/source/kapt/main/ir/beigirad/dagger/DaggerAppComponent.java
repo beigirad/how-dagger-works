@@ -36,8 +36,8 @@ public final class DaggerAppComponent implements AppComponent {
 
   }
 
-  public static AppComponent.Builder builder() {
-    return new Builder();
+  public static AppComponent.Factory factory() {
+    return new Factory();
   }
 
   private Capitalizer capitalizer() {
@@ -59,28 +59,12 @@ public final class DaggerAppComponent implements AppComponent {
     return instance;
   }
 
-  private static final class Builder implements AppComponent.Builder {
-    private Context context;
-
-    private OsInfoModule osInfoModule;
-
+  private static final class Factory implements AppComponent.Factory {
     @Override
-    public Builder context(Context context) {
-      this.context = Preconditions.checkNotNull(context);
-      return this;
-    }
-
-    @Override
-    public Builder os(OsInfoModule os) {
-      this.osInfoModule = Preconditions.checkNotNull(os);
-      return this;
-    }
-
-    @Override
-    public AppComponent build() {
-      Preconditions.checkBuilderRequirement(context, Context.class);
-      Preconditions.checkBuilderRequirement(osInfoModule, OsInfoModule.class);
-      return new DaggerAppComponent(new AppModule(), osInfoModule, context);
+    public AppComponent create(Context context, OsInfoModule os) {
+      Preconditions.checkNotNull(context);
+      Preconditions.checkNotNull(os);
+      return new DaggerAppComponent(new AppModule(), os, context);
     }
   }
 }
