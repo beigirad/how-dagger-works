@@ -69,6 +69,7 @@ public final class DaggerAppComponent {
     private MyApplication injectMyApplication(MyApplication instance) {
       MyApplication_MembersInjector.injectRepository(instance, repositoryImpl());
       MyApplication_MembersInjector.injectOsInfo(instance, OsInfoModule_ProvideLibrariesPathFactory.provideLibrariesPath(osInfoModule));
+      MyApplication_MembersInjector.injectCapitalizer(instance, capitalizer());
       return instance;
     }
   }
