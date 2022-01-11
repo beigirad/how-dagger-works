@@ -14,23 +14,23 @@ import javax.inject.Provider;
     "unchecked",
     "rawtypes"
 })
-public final class Repository_Factory implements Factory<Repository> {
+public final class RepositoryImpl_Factory implements Factory<RepositoryImpl> {
   private final Provider<Capitalizer> capitalizerProvider;
 
-  public Repository_Factory(Provider<Capitalizer> capitalizerProvider) {
+  public RepositoryImpl_Factory(Provider<Capitalizer> capitalizerProvider) {
     this.capitalizerProvider = capitalizerProvider;
   }
 
   @Override
-  public Repository get() {
+  public RepositoryImpl get() {
     return newInstance(capitalizerProvider.get());
   }
 
-  public static Repository_Factory create(Provider<Capitalizer> capitalizerProvider) {
-    return new Repository_Factory(capitalizerProvider);
+  public static RepositoryImpl_Factory create(Provider<Capitalizer> capitalizerProvider) {
+    return new RepositoryImpl_Factory(capitalizerProvider);
   }
 
-  public static Repository newInstance(Capitalizer capitalizer) {
-    return new Repository(capitalizer);
+  public static RepositoryImpl newInstance(Capitalizer capitalizer) {
+    return new RepositoryImpl(capitalizer);
   }
 }
