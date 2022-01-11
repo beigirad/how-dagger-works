@@ -61,8 +61,8 @@ public final class DaggerAppComponent {
       return AppModule_ProvideCapitalizerFactory.provideCapitalizer(appModule, AppModule_ProvideLocaleFactory.provideLocale(appModule));
     }
 
-    private Repository repository() {
-      return new Repository(capitalizer());
+    private RepositoryImpl repositoryImpl() {
+      return new RepositoryImpl(capitalizer());
     }
 
     @Override
@@ -71,7 +71,7 @@ public final class DaggerAppComponent {
     }
 
     private MyApplication injectMyApplication(MyApplication instance) {
-      MyApplication_MembersInjector.injectRepository(instance, repository());
+      MyApplication_MembersInjector.injectRepository(instance, repositoryImpl());
       return instance;
     }
   }
