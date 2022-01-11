@@ -5,6 +5,8 @@ import dagger.internal.Preconditions;
 import ir.beigirad.dagger.module.AppModule;
 import ir.beigirad.dagger.module.AppModule_ProvideCapitalizerFactory;
 import ir.beigirad.dagger.module.AppModule_ProvideLocaleFactory;
+import ir.beigirad.dagger.module.OsInfoModule;
+import ir.beigirad.dagger.module.OsInfoModule_ProvideLibrariesPathFactory;
 import javax.annotation.Generated;
 
 @DaggerGenerated
@@ -24,12 +26,10 @@ public final class DaggerAppComponent {
     return new Builder();
   }
 
-  public static AppComponent create() {
-    return new Builder().build();
-  }
-
   public static final class Builder {
     private AppModule appModule;
+
+    private OsInfoModule osInfoModule;
 
     private Builder() {
     }
@@ -39,21 +39,30 @@ public final class DaggerAppComponent {
       return this;
     }
 
+    public Builder osInfoModule(OsInfoModule osInfoModule) {
+      this.osInfoModule = Preconditions.checkNotNull(osInfoModule);
+      return this;
+    }
+
     public AppComponent build() {
       if (appModule == null) {
         this.appModule = new AppModule();
       }
-      return new AppComponentImpl(appModule);
+      Preconditions.checkBuilderRequirement(osInfoModule, OsInfoModule.class);
+      return new AppComponentImpl(appModule, osInfoModule);
     }
   }
 
   private static final class AppComponentImpl implements AppComponent {
     private final AppModule appModule;
 
+    private final OsInfoModule osInfoModule;
+
     private final AppComponentImpl appComponentImpl = this;
 
-    private AppComponentImpl(AppModule appModuleParam) {
+    private AppComponentImpl(AppModule appModuleParam, OsInfoModule osInfoModuleParam) {
       this.appModule = appModuleParam;
+      this.osInfoModule = osInfoModuleParam;
 
     }
 
@@ -72,6 +81,7 @@ public final class DaggerAppComponent {
 
     private MyApplication injectMyApplication(MyApplication instance) {
       MyApplication_MembersInjector.injectRepository(instance, repositoryImpl());
+      MyApplication_MembersInjector.injectOsInfo(instance, OsInfoModule_ProvideLibrariesPathFactory.provideLibrariesPath(osInfoModule));
       return instance;
     }
   }
