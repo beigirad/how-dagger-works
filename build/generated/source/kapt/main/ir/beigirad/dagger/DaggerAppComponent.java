@@ -41,15 +41,15 @@ public final class DaggerAppComponent implements AppComponent {
     return new Factory();
   }
 
-  private Capitalizer namedCapitalizer() {
+  private Capitalizer typeACapitalizer() {
     return AppModule_ProvideCapitalizerFactory.provideCapitalizer(appModule, AppModule_ProvideLocaleFactory.provideLocale(appModule));
   }
 
   private RepositoryImpl repositoryImpl() {
-    return new RepositoryImpl(context, namedCapitalizer());
+    return new RepositoryImpl(context, typeACapitalizer());
   }
 
-  private Capitalizer namedCapitalizer2() {
+  private Capitalizer typeBCapitalizer() {
     return AppModule_ProvideCapitalizerBFactory.provideCapitalizerB(appModule, AppModule_ProvideLocaleFactory.provideLocale(appModule));
   }
 
@@ -61,7 +61,7 @@ public final class DaggerAppComponent implements AppComponent {
   private MyApplication injectMyApplication(MyApplication instance) {
     MyApplication_MembersInjector.injectRepository(instance, repositoryImpl());
     MyApplication_MembersInjector.injectOsInfo(instance, OsInfoModule_ProvideLibrariesPathFactory.provideLibrariesPath(osInfoModule));
-    MyApplication_MembersInjector.injectCapitalizer(instance, namedCapitalizer2());
+    MyApplication_MembersInjector.injectCapitalizer(instance, typeBCapitalizer());
     return instance;
   }
 

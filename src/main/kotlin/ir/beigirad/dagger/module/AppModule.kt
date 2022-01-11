@@ -3,18 +3,19 @@ package ir.beigirad.dagger.module
 import dagger.Module
 import dagger.Provides
 import ir.beigirad.dagger.Capitalizer
+import ir.beigirad.dagger.qualifier.TypeA
+import ir.beigirad.dagger.qualifier.TypeB
 import java.util.Locale
-import javax.inject.Named
 
 @Module
 class AppModule {
-    @Named("A")
+    @TypeA
     @Provides
     fun provideCapitalizer(locale: Locale): Capitalizer {
         return Capitalizer(locale, "A")
     }
 
-    @Named("B")
+    @TypeB
     @Provides
     fun provideCapitalizerB(locale: Locale): Capitalizer {
         return Capitalizer(locale, "B")
