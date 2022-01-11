@@ -14,4 +14,10 @@ import ir.beigirad.dagger.module.OsInfoModule
 )
 interface AppComponent {
     fun inject(app: MyApplication)
+
+    @Component.Builder
+    interface Builder {
+        fun os(os: OsInfoModule): Builder
+        fun build(): AppComponent
+    }
 }
