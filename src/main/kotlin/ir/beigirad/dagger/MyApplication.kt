@@ -1,6 +1,7 @@
 package ir.beigirad.dagger
 
 import ir.beigirad.dagger.module.OsInfoModule
+import ir.beigirad.dagger.util.Context
 import ir.beigirad.dagger.util.OsInfo
 import javax.inject.Inject
 
@@ -13,6 +14,7 @@ class MyApplication {
 
     fun runApp() {
         DaggerAppComponent.builder()
+            .context(Context())
             .os(OsInfoModule(System.getProperties()))
             .build()
             .inject(this)
