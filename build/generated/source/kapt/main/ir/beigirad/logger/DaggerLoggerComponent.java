@@ -2,6 +2,7 @@ package ir.beigirad.logger;
 
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Preconditions;
+import ir.beigirad.dagger.util.Context;
 import javax.annotation.Generated;
 
 @DaggerGenerated
@@ -17,46 +18,34 @@ public final class DaggerLoggerComponent {
   private DaggerLoggerComponent() {
   }
 
-  public static Builder builder() {
-    return new Builder();
+  public static LoggerComponent.Factory factory() {
+    return new Factory();
   }
 
-  public static LoggerComponent create() {
-    return new Builder().build();
-  }
-
-  public static final class Builder {
-    private LoggerModule loggerModule;
-
-    private Builder() {
-    }
-
-    public Builder loggerModule(LoggerModule loggerModule) {
-      this.loggerModule = Preconditions.checkNotNull(loggerModule);
-      return this;
-    }
-
-    public LoggerComponent build() {
-      if (loggerModule == null) {
-        this.loggerModule = new LoggerModule();
-      }
-      return new LoggerComponentImpl(loggerModule);
+  private static final class Factory implements LoggerComponent.Factory {
+    @Override
+    public LoggerComponent create(Context context) {
+      Preconditions.checkNotNull(context);
+      return new LoggerComponentImpl(new LoggerModule(), context);
     }
   }
 
   private static final class LoggerComponentImpl implements LoggerComponent {
     private final LoggerModule loggerModule;
 
+    private final Context context;
+
     private final LoggerComponentImpl loggerComponentImpl = this;
 
-    private LoggerComponentImpl(LoggerModule loggerModuleParam) {
+    private LoggerComponentImpl(LoggerModule loggerModuleParam, Context contextParam) {
       this.loggerModule = loggerModuleParam;
+      this.context = contextParam;
 
     }
 
     @Override
     public Logger exposeLogger() {
-      return LoggerModule_ProvideLoggerFactory.provideLogger(loggerModule);
+      return LoggerModule_ProvideLoggerFactory.provideLogger(loggerModule, context);
     }
   }
 }

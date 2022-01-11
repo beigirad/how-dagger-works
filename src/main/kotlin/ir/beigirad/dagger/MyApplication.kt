@@ -27,7 +27,7 @@ class MyApplication {
             .create(
                 context = Context(),
                 os = OsInfoModule(System.getProperties()),
-                loggerComponent = DaggerLoggerComponent.create()
+                loggerComponent = DaggerLoggerComponent.factory().create(Context())
             )
 
         component.inject(this)
