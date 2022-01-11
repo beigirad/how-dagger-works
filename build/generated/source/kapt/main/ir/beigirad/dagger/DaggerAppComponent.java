@@ -40,5 +40,15 @@ public final class DaggerAppComponent {
 
 
     }
+
+    @Override
+    public void inject(MyApplication app) {
+      injectMyApplication(app);
+    }
+
+    private MyApplication injectMyApplication(MyApplication instance) {
+      MyApplication_MembersInjector.injectRepository(instance, new Repository());
+      return instance;
+    }
   }
 }
