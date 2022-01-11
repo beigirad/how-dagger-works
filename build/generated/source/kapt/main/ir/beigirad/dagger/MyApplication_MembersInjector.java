@@ -5,6 +5,7 @@ import dagger.internal.DaggerGenerated;
 import dagger.internal.InjectedFieldSignature;
 import ir.beigirad.dagger.util.OsInfo;
 import javax.annotation.Generated;
+import javax.inject.Named;
 import javax.inject.Provider;
 
 @DaggerGenerated
@@ -53,6 +54,7 @@ public final class MyApplication_MembersInjector implements MembersInjector<MyAp
   }
 
   @InjectedFieldSignature("ir.beigirad.dagger.MyApplication.capitalizer")
+  @Named("B")
   public static void injectCapitalizer(MyApplication instance, Capitalizer capitalizer) {
     instance.capitalizer = capitalizer;
   }

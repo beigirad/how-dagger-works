@@ -3,6 +3,7 @@ package ir.beigirad.dagger;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Preconditions;
 import ir.beigirad.dagger.module.AppModule;
+import ir.beigirad.dagger.module.AppModule_ProvideCapitalizerBFactory;
 import ir.beigirad.dagger.module.AppModule_ProvideCapitalizerFactory;
 import ir.beigirad.dagger.module.OsInfoModule;
 import ir.beigirad.dagger.module.OsInfoModule_ProvideLibrariesPathFactory;
@@ -51,7 +52,7 @@ public final class DaggerAppComponent implements AppComponent {
   private MyApplication injectMyApplication(MyApplication instance) {
     MyApplication_MembersInjector.injectRepository(instance, repositoryImpl());
     MyApplication_MembersInjector.injectOsInfo(instance, OsInfoModule_ProvideLibrariesPathFactory.provideLibrariesPath(osInfoModule));
-    MyApplication_MembersInjector.injectCapitalizer(instance, AppModule_ProvideCapitalizerFactory.provideCapitalizer(appModule));
+    MyApplication_MembersInjector.injectCapitalizer(instance, AppModule_ProvideCapitalizerBFactory.provideCapitalizerB(appModule));
     return instance;
   }
 

@@ -4,6 +4,7 @@ import ir.beigirad.dagger.module.OsInfoModule
 import ir.beigirad.dagger.util.Context
 import ir.beigirad.dagger.util.OsInfo
 import javax.inject.Inject
+import javax.inject.Named
 
 class MyApplication {
     @Inject
@@ -12,6 +13,7 @@ class MyApplication {
     @Inject
     lateinit var osInfo: OsInfo
 
+    @Named("B")
     @Inject
     lateinit var capitalizer: Capitalizer
 
