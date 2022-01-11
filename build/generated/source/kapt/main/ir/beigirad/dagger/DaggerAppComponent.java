@@ -1,6 +1,9 @@
 package ir.beigirad.dagger;
 
 import dagger.internal.DaggerGenerated;
+import dagger.internal.Preconditions;
+import ir.beigirad.dagger.module.AppModule;
+import ir.beigirad.dagger.module.AppModule_ProvideCapitalizerFactory;
 import javax.annotation.Generated;
 
 @DaggerGenerated
@@ -25,24 +28,36 @@ public final class DaggerAppComponent {
   }
 
   public static final class Builder {
+    private AppModule appModule;
+
     private Builder() {
     }
 
+    public Builder appModule(AppModule appModule) {
+      this.appModule = Preconditions.checkNotNull(appModule);
+      return this;
+    }
+
     public AppComponent build() {
-      return new AppComponentImpl();
+      if (appModule == null) {
+        this.appModule = new AppModule();
+      }
+      return new AppComponentImpl(appModule);
     }
   }
 
   private static final class AppComponentImpl implements AppComponent {
+    private final AppModule appModule;
+
     private final AppComponentImpl appComponentImpl = this;
 
-    private AppComponentImpl() {
-
+    private AppComponentImpl(AppModule appModuleParam) {
+      this.appModule = appModuleParam;
 
     }
 
     private Repository repository() {
-      return new Repository(new Capitalizer());
+      return new Repository(AppModule_ProvideCapitalizerFactory.provideCapitalizer(appModule));
     }
 
     @Override
