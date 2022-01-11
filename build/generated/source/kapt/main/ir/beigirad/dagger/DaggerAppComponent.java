@@ -30,6 +30,12 @@ public final class DaggerAppComponent implements AppComponent {
 
   @Override
   public void inject(MyApplication app) {
+    injectMyApplication(app);
+  }
+
+  private MyApplication injectMyApplication(MyApplication instance) {
+    MyApplication_MembersInjector.injectRepository(instance, new Repository());
+    return instance;
   }
 
   public static final class Builder {

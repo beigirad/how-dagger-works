@@ -1,10 +1,14 @@
 package ir.beigirad.dagger
 
+import javax.inject.Inject
+
 class MyApplication {
+    @Inject
     lateinit var repository: Repository
 
     fun runApp() {
-        repository = Repository()
+        DaggerAppComponent.create()
+            .inject(this)
 
         val users = repository.getUsersName()
         println("users: $users")
