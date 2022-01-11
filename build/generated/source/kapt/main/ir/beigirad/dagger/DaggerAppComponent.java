@@ -3,6 +3,7 @@ package ir.beigirad.dagger;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Preconditions;
 import ir.beigirad.dagger.module.AppModule;
+import ir.beigirad.dagger.module.AppModule_ProvideCapitalizerBFactory;
 import ir.beigirad.dagger.module.AppModule_ProvideCapitalizerFactory;
 import ir.beigirad.dagger.module.AppModule_ProvideLocaleFactory;
 import ir.beigirad.dagger.module.OsInfoModule;
@@ -53,12 +54,16 @@ public final class DaggerAppComponent {
 
     }
 
-    private Capitalizer capitalizer() {
+    private Capitalizer namedCapitalizer() {
       return AppModule_ProvideCapitalizerFactory.provideCapitalizer(appModule, AppModule_ProvideLocaleFactory.provideLocale(appModule));
     }
 
     private RepositoryImpl repositoryImpl() {
-      return new RepositoryImpl(context, capitalizer());
+      return new RepositoryImpl(context, namedCapitalizer());
+    }
+
+    private Capitalizer namedCapitalizer2() {
+      return AppModule_ProvideCapitalizerBFactory.provideCapitalizerB(appModule, AppModule_ProvideLocaleFactory.provideLocale(appModule));
     }
 
     @Override
@@ -69,7 +74,7 @@ public final class DaggerAppComponent {
     private MyApplication injectMyApplication(MyApplication instance) {
       MyApplication_MembersInjector.injectRepository(instance, repositoryImpl());
       MyApplication_MembersInjector.injectOsInfo(instance, OsInfoModule_ProvideLibrariesPathFactory.provideLibrariesPath(osInfoModule));
-      MyApplication_MembersInjector.injectCapitalizer(instance, capitalizer());
+      MyApplication_MembersInjector.injectCapitalizer(instance, namedCapitalizer2());
       return instance;
     }
   }

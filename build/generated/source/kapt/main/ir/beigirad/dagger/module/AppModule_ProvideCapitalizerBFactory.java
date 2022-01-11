@@ -21,27 +21,27 @@ import javax.inject.Provider;
     "unchecked",
     "rawtypes"
 })
-public final class AppModule_ProvideCapitalizerFactory implements Factory<Capitalizer> {
+public final class AppModule_ProvideCapitalizerBFactory implements Factory<Capitalizer> {
   private final AppModule module;
 
   private final Provider<Locale> localeProvider;
 
-  public AppModule_ProvideCapitalizerFactory(AppModule module, Provider<Locale> localeProvider) {
+  public AppModule_ProvideCapitalizerBFactory(AppModule module, Provider<Locale> localeProvider) {
     this.module = module;
     this.localeProvider = localeProvider;
   }
 
   @Override
   public Capitalizer get() {
-    return provideCapitalizer(module, localeProvider.get());
+    return provideCapitalizerB(module, localeProvider.get());
   }
 
-  public static AppModule_ProvideCapitalizerFactory create(AppModule module,
+  public static AppModule_ProvideCapitalizerBFactory create(AppModule module,
       Provider<Locale> localeProvider) {
-    return new AppModule_ProvideCapitalizerFactory(module, localeProvider);
+    return new AppModule_ProvideCapitalizerBFactory(module, localeProvider);
   }
 
-  public static Capitalizer provideCapitalizer(AppModule instance, Locale locale) {
-    return Preconditions.checkNotNullFromProvides(instance.provideCapitalizer(locale));
+  public static Capitalizer provideCapitalizerB(AppModule instance, Locale locale) {
+    return Preconditions.checkNotNullFromProvides(instance.provideCapitalizerB(locale));
   }
 }
