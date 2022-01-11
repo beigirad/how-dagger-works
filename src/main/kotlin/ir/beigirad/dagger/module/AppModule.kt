@@ -3,17 +3,18 @@ package ir.beigirad.dagger.module
 import dagger.Module
 import dagger.Provides
 import ir.beigirad.dagger.Capitalizer
-import javax.inject.Named
+import ir.beigirad.dagger.qualifier.TypeA
+import ir.beigirad.dagger.qualifier.TypeB
 
 @Module
 class AppModule {
-    @Named("A")
+    @TypeA
     @Provides
     fun provideCapitalizer(): Capitalizer {
         return Capitalizer("A")
     }
 
-    @Named("B")
+    @TypeB
     @Provides
     fun provideCapitalizerB(): Capitalizer {
         return Capitalizer("B")
