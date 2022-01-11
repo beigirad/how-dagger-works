@@ -21,21 +21,25 @@ public final class MyApplication_MembersInjector implements MembersInjector<MyAp
 
   private final Provider<OsInfo> osInfoProvider;
 
+  private final Provider<Capitalizer> capitalizerProvider;
+
   public MyApplication_MembersInjector(Provider<Repository> repositoryProvider,
-      Provider<OsInfo> osInfoProvider) {
+      Provider<OsInfo> osInfoProvider, Provider<Capitalizer> capitalizerProvider) {
     this.repositoryProvider = repositoryProvider;
     this.osInfoProvider = osInfoProvider;
+    this.capitalizerProvider = capitalizerProvider;
   }
 
   public static MembersInjector<MyApplication> create(Provider<Repository> repositoryProvider,
-      Provider<OsInfo> osInfoProvider) {
-    return new MyApplication_MembersInjector(repositoryProvider, osInfoProvider);
+      Provider<OsInfo> osInfoProvider, Provider<Capitalizer> capitalizerProvider) {
+    return new MyApplication_MembersInjector(repositoryProvider, osInfoProvider, capitalizerProvider);
   }
 
   @Override
   public void injectMembers(MyApplication instance) {
     injectRepository(instance, repositoryProvider.get());
     injectOsInfo(instance, osInfoProvider.get());
+    injectCapitalizer(instance, capitalizerProvider.get());
   }
 
   @InjectedFieldSignature("ir.beigirad.dagger.MyApplication.repository")
@@ -46,5 +50,10 @@ public final class MyApplication_MembersInjector implements MembersInjector<MyAp
   @InjectedFieldSignature("ir.beigirad.dagger.MyApplication.osInfo")
   public static void injectOsInfo(MyApplication instance, OsInfo osInfo) {
     instance.osInfo = osInfo;
+  }
+
+  @InjectedFieldSignature("ir.beigirad.dagger.MyApplication.capitalizer")
+  public static void injectCapitalizer(MyApplication instance, Capitalizer capitalizer) {
+    instance.capitalizer = capitalizer;
   }
 }
