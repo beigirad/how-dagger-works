@@ -12,6 +12,9 @@ class MyApplication {
     @Inject
     lateinit var osInfo: OsInfo
 
+    @Inject
+    lateinit var capitalizer: Capitalizer
+
     fun runApp() {
         DaggerAppComponent.factory()
             .create(
@@ -24,6 +27,8 @@ class MyApplication {
         println("users: $users")
 
         println("osInfo: $osInfo")
+
+        println(capitalizer.capitalize("hello!"))
     }
 
     companion object {

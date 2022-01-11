@@ -51,6 +51,7 @@ public final class DaggerAppComponent implements AppComponent {
   private MyApplication injectMyApplication(MyApplication instance) {
     MyApplication_MembersInjector.injectRepository(instance, repositoryImpl());
     MyApplication_MembersInjector.injectOsInfo(instance, OsInfoModule_ProvideLibrariesPathFactory.provideLibrariesPath(osInfoModule));
+    MyApplication_MembersInjector.injectCapitalizer(instance, AppModule_ProvideCapitalizerFactory.provideCapitalizer(appModule));
     return instance;
   }
 
