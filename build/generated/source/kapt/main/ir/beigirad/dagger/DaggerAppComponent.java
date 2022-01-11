@@ -7,6 +7,7 @@ import ir.beigirad.dagger.module.AppModule_ProvideCapitalizerFactory;
 import ir.beigirad.dagger.module.AppModule_ProvideLocaleFactory;
 import ir.beigirad.dagger.module.OsInfoModule;
 import ir.beigirad.dagger.module.OsInfoModule_ProvideLibrariesPathFactory;
+import ir.beigirad.dagger.util.Context;
 import javax.annotation.Generated;
 
 @DaggerGenerated
@@ -19,13 +20,17 @@ import javax.annotation.Generated;
     "rawtypes"
 })
 public final class DaggerAppComponent implements AppComponent {
+  private final Context context;
+
   private final AppModule appModule;
 
   private final OsInfoModule osInfoModule;
 
   private final DaggerAppComponent appComponent = this;
 
-  private DaggerAppComponent(AppModule appModuleParam, OsInfoModule osInfoModuleParam) {
+  private DaggerAppComponent(AppModule appModuleParam, OsInfoModule osInfoModuleParam,
+      Context contextParam) {
+    this.context = contextParam;
     this.appModule = appModuleParam;
     this.osInfoModule = osInfoModuleParam;
 
@@ -40,7 +45,7 @@ public final class DaggerAppComponent implements AppComponent {
   }
 
   private RepositoryImpl repositoryImpl() {
-    return new RepositoryImpl(capitalizer());
+    return new RepositoryImpl(context, capitalizer());
   }
 
   @Override
@@ -55,7 +60,15 @@ public final class DaggerAppComponent implements AppComponent {
   }
 
   private static final class Builder implements AppComponent.Builder {
+    private Context context;
+
     private OsInfoModule osInfoModule;
+
+    @Override
+    public Builder context(Context context) {
+      this.context = Preconditions.checkNotNull(context);
+      return this;
+    }
 
     @Override
     public Builder os(OsInfoModule os) {
@@ -65,8 +78,9 @@ public final class DaggerAppComponent implements AppComponent {
 
     @Override
     public AppComponent build() {
+      Preconditions.checkBuilderRequirement(context, Context.class);
       Preconditions.checkBuilderRequirement(osInfoModule, OsInfoModule.class);
-      return new DaggerAppComponent(new AppModule(), osInfoModule);
+      return new DaggerAppComponent(new AppModule(), osInfoModule, context);
     }
   }
 }
