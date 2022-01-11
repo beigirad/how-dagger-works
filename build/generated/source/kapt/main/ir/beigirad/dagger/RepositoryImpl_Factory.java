@@ -8,7 +8,7 @@ import ir.beigirad.dagger.util.Context;
 import javax.annotation.Generated;
 import javax.inject.Provider;
 
-@ScopeMetadata
+@ScopeMetadata("ir.beigirad.dagger.scope.AppScope")
 @QualifierMetadata("ir.beigirad.dagger.qualifier.TypeA")
 @DaggerGenerated
 @Generated(
