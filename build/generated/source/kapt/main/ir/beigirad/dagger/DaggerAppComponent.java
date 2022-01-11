@@ -1,6 +1,8 @@
 package ir.beigirad.dagger;
 
 import dagger.internal.DaggerGenerated;
+import dagger.internal.DoubleCheck;
+import dagger.internal.InstanceFactory;
 import dagger.internal.Preconditions;
 import ir.beigirad.dagger.module.AppModule;
 import ir.beigirad.dagger.module.AppModule_ProvideCapitalizerBFactory;
@@ -9,7 +11,9 @@ import ir.beigirad.dagger.module.AppModule_ProvideLocaleFactory;
 import ir.beigirad.dagger.module.OsInfoModule;
 import ir.beigirad.dagger.module.OsInfoModule_ProvideLibrariesPathFactory;
 import ir.beigirad.dagger.util.Context;
+import java.util.Locale;
 import javax.annotation.Generated;
+import javax.inject.Provider;
 
 @DaggerGenerated
 @Generated(
@@ -21,19 +25,25 @@ import javax.annotation.Generated;
     "rawtypes"
 })
 public final class DaggerAppComponent implements AppComponent {
-  private final Context context;
+  private final OsInfoModule osInfoModule;
 
   private final AppModule appModule;
 
-  private final OsInfoModule osInfoModule;
-
   private final DaggerAppComponent appComponent = this;
+
+  private Provider<Context> contextProvider;
+
+  private Provider<Locale> provideLocaleProvider;
+
+  private Provider<Capitalizer> provideCapitalizerProvider;
+
+  private Provider<RepositoryImpl> repositoryImplProvider;
 
   private DaggerAppComponent(AppModule appModuleParam, OsInfoModule osInfoModuleParam,
       Context contextParam) {
-    this.context = contextParam;
-    this.appModule = appModuleParam;
     this.osInfoModule = osInfoModuleParam;
+    this.appModule = appModuleParam;
+    initialize(appModuleParam, osInfoModuleParam, contextParam);
 
   }
 
@@ -41,16 +51,17 @@ public final class DaggerAppComponent implements AppComponent {
     return new Factory();
   }
 
-  private Capitalizer typeACapitalizer() {
-    return AppModule_ProvideCapitalizerFactory.provideCapitalizer(appModule, AppModule_ProvideLocaleFactory.provideLocale(appModule));
-  }
-
-  private RepositoryImpl repositoryImpl() {
-    return new RepositoryImpl(context, typeACapitalizer());
-  }
-
   private Capitalizer typeBCapitalizer() {
     return AppModule_ProvideCapitalizerBFactory.provideCapitalizerB(appModule, AppModule_ProvideLocaleFactory.provideLocale(appModule));
+  }
+
+  @SuppressWarnings("unchecked")
+  private void initialize(final AppModule appModuleParam, final OsInfoModule osInfoModuleParam,
+      final Context contextParam) {
+    this.contextProvider = InstanceFactory.create(contextParam);
+    this.provideLocaleProvider = AppModule_ProvideLocaleFactory.create(appModuleParam);
+    this.provideCapitalizerProvider = AppModule_ProvideCapitalizerFactory.create(appModuleParam, provideLocaleProvider);
+    this.repositoryImplProvider = DoubleCheck.provider(RepositoryImpl_Factory.create(contextProvider, provideCapitalizerProvider));
   }
 
   @Override
@@ -59,7 +70,7 @@ public final class DaggerAppComponent implements AppComponent {
   }
 
   private MyApplication injectMyApplication(MyApplication instance) {
-    MyApplication_MembersInjector.injectRepository(instance, repositoryImpl());
+    MyApplication_MembersInjector.injectRepository(instance, repositoryImplProvider.get());
     MyApplication_MembersInjector.injectOsInfo(instance, OsInfoModule_ProvideLibrariesPathFactory.provideLibrariesPath(osInfoModule));
     MyApplication_MembersInjector.injectCapitalizer(instance, typeBCapitalizer());
     return instance;
