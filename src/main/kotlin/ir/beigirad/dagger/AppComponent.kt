@@ -17,11 +17,8 @@ import ir.beigirad.dagger.util.Context
 interface AppComponent {
     fun inject(app: MyApplication)
 
-    @Component.Builder
-    interface Builder {
-        @BindsInstance
-        fun context(context: Context): Builder
-        fun os(os: OsInfoModule): Builder
-        fun build(): AppComponent
+    @Component.Factory
+    interface Factory {
+        fun create(@BindsInstance context: Context, os: OsInfoModule): AppComponent
     }
 }
