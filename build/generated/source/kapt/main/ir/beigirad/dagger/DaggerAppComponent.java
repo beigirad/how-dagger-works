@@ -5,6 +5,8 @@ import dagger.internal.Preconditions;
 import ir.beigirad.dagger.module.AppModule;
 import ir.beigirad.dagger.module.AppModule_ProvideCapitalizerFactory;
 import ir.beigirad.dagger.module.AppModule_ProvideLocaleFactory;
+import ir.beigirad.dagger.module.OsInfoModule;
+import ir.beigirad.dagger.module.OsInfoModule_ProvideLibrariesPathFactory;
 import javax.annotation.Generated;
 
 @DaggerGenerated
@@ -19,19 +21,18 @@ import javax.annotation.Generated;
 public final class DaggerAppComponent implements AppComponent {
   private final AppModule appModule;
 
+  private final OsInfoModule osInfoModule;
+
   private final DaggerAppComponent appComponent = this;
 
-  private DaggerAppComponent(AppModule appModuleParam) {
+  private DaggerAppComponent(AppModule appModuleParam, OsInfoModule osInfoModuleParam) {
     this.appModule = appModuleParam;
+    this.osInfoModule = osInfoModuleParam;
 
   }
 
   public static Builder builder() {
     return new Builder();
-  }
-
-  public static AppComponent create() {
-    return new Builder().build();
   }
 
   private Capitalizer capitalizer() {
@@ -49,11 +50,14 @@ public final class DaggerAppComponent implements AppComponent {
 
   private MyApplication injectMyApplication(MyApplication instance) {
     MyApplication_MembersInjector.injectRepository(instance, repositoryImpl());
+    MyApplication_MembersInjector.injectOsInfo(instance, OsInfoModule_ProvideLibrariesPathFactory.provideLibrariesPath(osInfoModule));
     return instance;
   }
 
   public static final class Builder {
     private AppModule appModule;
+
+    private OsInfoModule osInfoModule;
 
     private Builder() {
     }
@@ -63,11 +67,17 @@ public final class DaggerAppComponent implements AppComponent {
       return this;
     }
 
+    public Builder osInfoModule(OsInfoModule osInfoModule) {
+      this.osInfoModule = Preconditions.checkNotNull(osInfoModule);
+      return this;
+    }
+
     public AppComponent build() {
       if (appModule == null) {
         this.appModule = new AppModule();
       }
-      return new DaggerAppComponent(appModule);
+      Preconditions.checkBuilderRequirement(osInfoModule, OsInfoModule.class);
+      return new DaggerAppComponent(appModule, osInfoModule);
     }
   }
 }
