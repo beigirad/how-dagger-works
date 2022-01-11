@@ -4,6 +4,7 @@ import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import dagger.internal.QualifierMetadata;
 import dagger.internal.ScopeMetadata;
+import ir.beigirad.dagger.util.Context;
 import javax.annotation.Generated;
 import javax.inject.Provider;
 
@@ -19,22 +20,27 @@ import javax.inject.Provider;
     "rawtypes"
 })
 public final class RepositoryImpl_Factory implements Factory<RepositoryImpl> {
+  private final Provider<Context> contextProvider;
+
   private final Provider<Capitalizer> capitalizerProvider;
 
-  public RepositoryImpl_Factory(Provider<Capitalizer> capitalizerProvider) {
+  public RepositoryImpl_Factory(Provider<Context> contextProvider,
+      Provider<Capitalizer> capitalizerProvider) {
+    this.contextProvider = contextProvider;
     this.capitalizerProvider = capitalizerProvider;
   }
 
   @Override
   public RepositoryImpl get() {
-    return newInstance(capitalizerProvider.get());
+    return newInstance(contextProvider.get(), capitalizerProvider.get());
   }
 
-  public static RepositoryImpl_Factory create(Provider<Capitalizer> capitalizerProvider) {
-    return new RepositoryImpl_Factory(capitalizerProvider);
+  public static RepositoryImpl_Factory create(Provider<Context> contextProvider,
+      Provider<Capitalizer> capitalizerProvider) {
+    return new RepositoryImpl_Factory(contextProvider, capitalizerProvider);
   }
 
-  public static RepositoryImpl newInstance(Capitalizer capitalizer) {
-    return new RepositoryImpl(capitalizer);
+  public static RepositoryImpl newInstance(Context context, Capitalizer capitalizer) {
+    return new RepositoryImpl(context, capitalizer);
   }
 }

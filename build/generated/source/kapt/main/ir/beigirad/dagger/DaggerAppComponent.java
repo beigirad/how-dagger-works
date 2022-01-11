@@ -7,6 +7,7 @@ import ir.beigirad.dagger.module.AppModule_ProvideCapitalizerFactory;
 import ir.beigirad.dagger.module.AppModule_ProvideLocaleFactory;
 import ir.beigirad.dagger.module.OsInfoModule;
 import ir.beigirad.dagger.module.OsInfoModule_ProvideLibrariesPathFactory;
+import ir.beigirad.dagger.util.Context;
 import javax.annotation.Generated;
 
 @DaggerGenerated
@@ -27,7 +28,15 @@ public final class DaggerAppComponent {
   }
 
   private static final class Builder implements AppComponent.Builder {
+    private Context context;
+
     private OsInfoModule osInfoModule;
+
+    @Override
+    public Builder context(Context context) {
+      this.context = Preconditions.checkNotNull(context);
+      return this;
+    }
 
     @Override
     public Builder os(OsInfoModule os) {
@@ -37,19 +46,24 @@ public final class DaggerAppComponent {
 
     @Override
     public AppComponent build() {
+      Preconditions.checkBuilderRequirement(context, Context.class);
       Preconditions.checkBuilderRequirement(osInfoModule, OsInfoModule.class);
-      return new AppComponentImpl(new AppModule(), osInfoModule);
+      return new AppComponentImpl(new AppModule(), osInfoModule, context);
     }
   }
 
   private static final class AppComponentImpl implements AppComponent {
+    private final Context context;
+
     private final AppModule appModule;
 
     private final OsInfoModule osInfoModule;
 
     private final AppComponentImpl appComponentImpl = this;
 
-    private AppComponentImpl(AppModule appModuleParam, OsInfoModule osInfoModuleParam) {
+    private AppComponentImpl(AppModule appModuleParam, OsInfoModule osInfoModuleParam,
+        Context contextParam) {
+      this.context = contextParam;
       this.appModule = appModuleParam;
       this.osInfoModule = osInfoModuleParam;
 
@@ -60,7 +74,7 @@ public final class DaggerAppComponent {
     }
 
     private RepositoryImpl repositoryImpl() {
-      return new RepositoryImpl(capitalizer());
+      return new RepositoryImpl(context, capitalizer());
     }
 
     @Override
