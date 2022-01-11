@@ -4,12 +4,12 @@ import dagger.MembersInjector;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.InjectedFieldSignature;
 import dagger.internal.QualifierMetadata;
+import ir.beigirad.dagger.qualifier.TypeB;
 import ir.beigirad.dagger.util.OsInfo;
 import javax.annotation.Generated;
-import javax.inject.Named;
 import javax.inject.Provider;
 
-@QualifierMetadata("javax.inject.Named")
+@QualifierMetadata("ir.beigirad.dagger.qualifier.TypeB")
 @DaggerGenerated
 @Generated(
     value = "dagger.internal.codegen.ComponentProcessor",
@@ -56,7 +56,7 @@ public final class MyApplication_MembersInjector implements MembersInjector<MyAp
   }
 
   @InjectedFieldSignature("ir.beigirad.dagger.MyApplication.capitalizer")
-  @Named("B")
+  @TypeB
   public static void injectCapitalizer(MyApplication instance, Capitalizer capitalizer) {
     instance.capitalizer = capitalizer;
   }

@@ -11,7 +11,7 @@ import javax.annotation.Generated;
 import javax.inject.Provider;
 
 @ScopeMetadata
-@QualifierMetadata("javax.inject.Named")
+@QualifierMetadata("ir.beigirad.dagger.qualifier.TypeB")
 @DaggerGenerated
 @Generated(
     value = "dagger.internal.codegen.ComponentProcessor",
