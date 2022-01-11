@@ -6,6 +6,7 @@ import dagger.internal.InjectedFieldSignature;
 import dagger.internal.QualifierMetadata;
 import ir.beigirad.dagger.qualifier.TypeB;
 import ir.beigirad.dagger.util.OsInfo;
+import ir.beigirad.logger.Logger;
 import javax.annotation.Generated;
 import javax.inject.Provider;
 
@@ -26,16 +27,21 @@ public final class MyApplication_MembersInjector implements MembersInjector<MyAp
 
   private final Provider<Capitalizer> capitalizerProvider;
 
+  private final Provider<Logger> loggerProvider;
+
   public MyApplication_MembersInjector(Provider<Repository> repositoryProvider,
-      Provider<OsInfo> osInfoProvider, Provider<Capitalizer> capitalizerProvider) {
+      Provider<OsInfo> osInfoProvider, Provider<Capitalizer> capitalizerProvider,
+      Provider<Logger> loggerProvider) {
     this.repositoryProvider = repositoryProvider;
     this.osInfoProvider = osInfoProvider;
     this.capitalizerProvider = capitalizerProvider;
+    this.loggerProvider = loggerProvider;
   }
 
   public static MembersInjector<MyApplication> create(Provider<Repository> repositoryProvider,
-      Provider<OsInfo> osInfoProvider, Provider<Capitalizer> capitalizerProvider) {
-    return new MyApplication_MembersInjector(repositoryProvider, osInfoProvider, capitalizerProvider);
+      Provider<OsInfo> osInfoProvider, Provider<Capitalizer> capitalizerProvider,
+      Provider<Logger> loggerProvider) {
+    return new MyApplication_MembersInjector(repositoryProvider, osInfoProvider, capitalizerProvider, loggerProvider);
   }
 
   @Override
@@ -43,6 +49,7 @@ public final class MyApplication_MembersInjector implements MembersInjector<MyAp
     injectRepository(instance, repositoryProvider.get());
     injectOsInfo(instance, osInfoProvider.get());
     injectCapitalizer(instance, capitalizerProvider.get());
+    injectLogger(instance, loggerProvider.get());
   }
 
   @InjectedFieldSignature("ir.beigirad.dagger.MyApplication.repository")
@@ -59,5 +66,10 @@ public final class MyApplication_MembersInjector implements MembersInjector<MyAp
   @TypeB
   public static void injectCapitalizer(MyApplication instance, Capitalizer capitalizer) {
     instance.capitalizer = capitalizer;
+  }
+
+  @InjectedFieldSignature("ir.beigirad.dagger.MyApplication.logger")
+  public static void injectLogger(MyApplication instance, Logger logger) {
+    instance.logger = logger;
   }
 }
