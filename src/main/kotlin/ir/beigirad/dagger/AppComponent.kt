@@ -5,8 +5,10 @@ import dagger.Component
 import ir.beigirad.dagger.module.AppModule
 import ir.beigirad.dagger.module.DataModule
 import ir.beigirad.dagger.module.OsInfoModule
+import ir.beigirad.dagger.scope.AppScope
 import ir.beigirad.dagger.util.Context
 
+@AppScope
 @Component(
     modules = [
         AppModule::class,
