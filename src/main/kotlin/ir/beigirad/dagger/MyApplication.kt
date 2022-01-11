@@ -13,7 +13,7 @@ class MyApplication {
 
     fun runApp() {
         DaggerAppComponent.builder()
-            .osInfoModule(OsInfoModule(System.getProperties()))
+            .os(OsInfoModule(System.getProperties()))
             .build()
             .inject(this)
 

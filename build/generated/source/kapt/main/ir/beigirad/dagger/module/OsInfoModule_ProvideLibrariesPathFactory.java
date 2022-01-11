@@ -3,9 +3,13 @@ package ir.beigirad.dagger.module;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import dagger.internal.Preconditions;
+import dagger.internal.QualifierMetadata;
+import dagger.internal.ScopeMetadata;
 import ir.beigirad.dagger.util.OsInfo;
 import javax.annotation.Generated;
 
+@ScopeMetadata
+@QualifierMetadata
 @DaggerGenerated
 @Generated(
     value = "dagger.internal.codegen.ComponentProcessor",

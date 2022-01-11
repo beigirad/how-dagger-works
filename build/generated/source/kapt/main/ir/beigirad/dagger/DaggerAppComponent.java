@@ -22,34 +22,23 @@ public final class DaggerAppComponent {
   private DaggerAppComponent() {
   }
 
-  public static Builder builder() {
+  public static AppComponent.Builder builder() {
     return new Builder();
   }
 
-  public static final class Builder {
-    private AppModule appModule;
-
+  private static final class Builder implements AppComponent.Builder {
     private OsInfoModule osInfoModule;
 
-    private Builder() {
-    }
-
-    public Builder appModule(AppModule appModule) {
-      this.appModule = Preconditions.checkNotNull(appModule);
+    @Override
+    public Builder os(OsInfoModule os) {
+      this.osInfoModule = Preconditions.checkNotNull(os);
       return this;
     }
 
-    public Builder osInfoModule(OsInfoModule osInfoModule) {
-      this.osInfoModule = Preconditions.checkNotNull(osInfoModule);
-      return this;
-    }
-
+    @Override
     public AppComponent build() {
-      if (appModule == null) {
-        this.appModule = new AppModule();
-      }
       Preconditions.checkBuilderRequirement(osInfoModule, OsInfoModule.class);
-      return new AppComponentImpl(appModule, osInfoModule);
+      return new AppComponentImpl(new AppModule(), osInfoModule);
     }
   }
 
