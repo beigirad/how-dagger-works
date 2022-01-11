@@ -18,12 +18,14 @@ class MyApplication {
     lateinit var capitalizer: Capitalizer
 
     fun runApp() {
-        DaggerAppComponent.factory()
+        val component = DaggerAppComponent.factory()
             .create(
                 context = Context(),
                 os = OsInfoModule(System.getProperties())
             )
-            .inject(this)
+
+        component.inject(this)
+        component.inject(this)
 
         val users = repository.getUsersName()
         println("users: $users")
