@@ -4,6 +4,8 @@ import dagger.internal.DaggerGenerated;
 import dagger.internal.DoubleCheck;
 import dagger.internal.InstanceFactory;
 import dagger.internal.Preconditions;
+import ir.beigirad.dagger.interception.AInterceptor;
+import ir.beigirad.dagger.interception.BInterceptor;
 import ir.beigirad.dagger.module.AppModule;
 import ir.beigirad.dagger.module.AppModule_ProvideCapitalizerBFactory;
 import ir.beigirad.dagger.module.AppModule_ProvideCapitalizerFactory;
@@ -89,6 +91,8 @@ public final class DaggerAppComponent implements AppComponent {
     MyApplication_MembersInjector.injectOsInfo(instance, OsInfoModule_ProvideLibrariesPathFactory.provideLibrariesPath(osInfoModule));
     MyApplication_MembersInjector.injectCapitalizer(instance, typeBCapitalizer());
     MyApplication_MembersInjector.injectLogger(instance, Preconditions.checkNotNullFromComponent(loggerComponent.exposeLogger()));
+    MyApplication_MembersInjector.injectAInterceptor(instance, new AInterceptor());
+    MyApplication_MembersInjector.injectBInterceptor(instance, new BInterceptor());
     return instance;
   }
 
