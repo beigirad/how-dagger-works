@@ -79,8 +79,9 @@ public final class DaggerAppComponent implements AppComponent {
   }
 
   @Override
-  public ScreenASubcomponent screenAComponent() {
-    return new ScreenASubcomponentImpl(appComponent);
+  public ScreenASubcomponent screenAComponent(ScreenAModule module) {
+    Preconditions.checkNotNull(module);
+    return new ScreenASubcomponentImpl(appComponent, module);
   }
 
   private MyApplication injectMyApplication(MyApplication instance) {
@@ -108,9 +109,10 @@ public final class DaggerAppComponent implements AppComponent {
 
     private final ScreenASubcomponentImpl screenASubcomponentImpl = this;
 
-    private ScreenASubcomponentImpl(DaggerAppComponent appComponent) {
+    private ScreenASubcomponentImpl(DaggerAppComponent appComponent,
+        ScreenAModule screenAModuleParam) {
       this.appComponent = appComponent;
-      this.screenAModule = new ScreenAModule();
+      this.screenAModule = screenAModuleParam;
 
     }
 
