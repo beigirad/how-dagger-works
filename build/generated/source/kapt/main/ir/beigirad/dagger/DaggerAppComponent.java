@@ -48,6 +48,28 @@ public final class DaggerAppComponent {
     }
   }
 
+  private static final class ScreenASubcomponentBuilder implements ScreenASubcomponent.Builder {
+    private final AppComponentImpl appComponentImpl;
+
+    private ScreenAModule screenAModule;
+
+    private ScreenASubcomponentBuilder(AppComponentImpl appComponentImpl) {
+      this.appComponentImpl = appComponentImpl;
+    }
+
+    @Override
+    public ScreenASubcomponentBuilder module(ScreenAModule screenAModule) {
+      this.screenAModule = Preconditions.checkNotNull(screenAModule);
+      return this;
+    }
+
+    @Override
+    public ScreenASubcomponent build() {
+      Preconditions.checkBuilderRequirement(screenAModule, ScreenAModule.class);
+      return new ScreenASubcomponentImpl(appComponentImpl, screenAModule);
+    }
+  }
+
   private static final class ScreenASubcomponentImpl implements ScreenASubcomponent {
     private final ScreenAModule screenAModule;
 
@@ -118,9 +140,8 @@ public final class DaggerAppComponent {
     }
 
     @Override
-    public ScreenASubcomponent screenAComponent(ScreenAModule module) {
-      Preconditions.checkNotNull(module);
-      return new ScreenASubcomponentImpl(appComponentImpl, module);
+    public ScreenASubcomponent.Builder screenAComponent() {
+      return new ScreenASubcomponentBuilder(appComponentImpl);
     }
 
     private MyApplication injectMyApplication(MyApplication instance) {
