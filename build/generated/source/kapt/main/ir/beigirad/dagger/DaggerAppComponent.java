@@ -12,6 +12,11 @@ import ir.beigirad.dagger.module.OsInfoModule;
 import ir.beigirad.dagger.module.OsInfoModule_ProvideLibrariesPathFactory;
 import ir.beigirad.dagger.util.Context;
 import ir.beigirad.logger.LoggerComponent;
+import ir.beigirad.screen_a.ScreenA;
+import ir.beigirad.screen_a.ScreenAModule;
+import ir.beigirad.screen_a.ScreenAModule_ProvideInfoFactory;
+import ir.beigirad.screen_a.ScreenASubcomponent;
+import ir.beigirad.screen_a.ScreenA_MembersInjector;
 import java.util.Locale;
 import javax.annotation.Generated;
 import javax.inject.Provider;
@@ -40,6 +45,30 @@ public final class DaggerAppComponent {
       Preconditions.checkNotNull(os);
       Preconditions.checkNotNull(loggerComponent);
       return new AppComponentImpl(new AppModule(), os, loggerComponent, context);
+    }
+  }
+
+  private static final class ScreenASubcomponentImpl implements ScreenASubcomponent {
+    private final ScreenAModule screenAModule;
+
+    private final AppComponentImpl appComponentImpl;
+
+    private final ScreenASubcomponentImpl screenASubcomponentImpl = this;
+
+    private ScreenASubcomponentImpl(AppComponentImpl appComponentImpl) {
+      this.appComponentImpl = appComponentImpl;
+      this.screenAModule = new ScreenAModule();
+
+    }
+
+    @Override
+    public void inject(ScreenA screenA) {
+      injectScreenA(screenA);
+    }
+
+    private ScreenA injectScreenA(ScreenA instance) {
+      ScreenA_MembersInjector.injectRelatedObject(instance, ScreenAModule_ProvideInfoFactory.provideInfo(screenAModule));
+      return instance;
     }
   }
 
@@ -85,6 +114,11 @@ public final class DaggerAppComponent {
     @Override
     public void inject(MyApplication app) {
       injectMyApplication(app);
+    }
+
+    @Override
+    public ScreenASubcomponent screenAComponent() {
+      return new ScreenASubcomponentImpl(appComponentImpl);
     }
 
     private MyApplication injectMyApplication(MyApplication instance) {
