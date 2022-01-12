@@ -1,7 +1,6 @@
 package ir.beigirad.dagger
 
-import ir.beigirad.dagger.interception.AInterceptor
-import ir.beigirad.dagger.interception.BInterceptor
+import ir.beigirad.dagger.interception.Interceptor
 import ir.beigirad.dagger.module.OsInfoModule
 import ir.beigirad.dagger.qualifier.TypeB
 import ir.beigirad.dagger.util.Context
@@ -25,10 +24,7 @@ class MyApplication {
     lateinit var logger: Logger
 
     @Inject
-    lateinit var aInterceptor: AInterceptor
-
-    @Inject
-    lateinit var bInterceptor: BInterceptor
+    lateinit var interceptors: Set<@JvmSuppressWildcards Interceptor>
 
     fun runApp() {
         val component = DaggerAppComponent.factory()
@@ -49,7 +45,7 @@ class MyApplication {
         logger.log(capitalizer.capitalize("hello!"))
 
         // bInterceptor.intercept(aInterceptor.intercept("Bye"))
-        setOf(aInterceptor, bInterceptor)
+        interceptors
             .fold("Bye") { acc, interceptor -> interceptor.intercept(acc) }
             .also { logger.log(it) }
     }

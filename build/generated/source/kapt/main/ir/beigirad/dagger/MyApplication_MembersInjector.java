@@ -3,11 +3,11 @@ package ir.beigirad.dagger;
 import dagger.MembersInjector;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.InjectedFieldSignature;
-import ir.beigirad.dagger.interception.AInterceptor;
-import ir.beigirad.dagger.interception.BInterceptor;
+import ir.beigirad.dagger.interception.Interceptor;
 import ir.beigirad.dagger.qualifier.TypeB;
 import ir.beigirad.dagger.util.OsInfo;
 import ir.beigirad.logger.Logger;
+import java.util.Set;
 import javax.annotation.Generated;
 import javax.inject.Provider;
 
@@ -29,27 +29,22 @@ public final class MyApplication_MembersInjector implements MembersInjector<MyAp
 
   private final Provider<Logger> loggerProvider;
 
-  private final Provider<AInterceptor> aInterceptorProvider;
-
-  private final Provider<BInterceptor> bInterceptorProvider;
+  private final Provider<Set<Interceptor>> interceptorsProvider;
 
   public MyApplication_MembersInjector(Provider<Repository> repositoryProvider,
       Provider<OsInfo> osInfoProvider, Provider<Capitalizer> capitalizerProvider,
-      Provider<Logger> loggerProvider, Provider<AInterceptor> aInterceptorProvider,
-      Provider<BInterceptor> bInterceptorProvider) {
+      Provider<Logger> loggerProvider, Provider<Set<Interceptor>> interceptorsProvider) {
     this.repositoryProvider = repositoryProvider;
     this.osInfoProvider = osInfoProvider;
     this.capitalizerProvider = capitalizerProvider;
     this.loggerProvider = loggerProvider;
-    this.aInterceptorProvider = aInterceptorProvider;
-    this.bInterceptorProvider = bInterceptorProvider;
+    this.interceptorsProvider = interceptorsProvider;
   }
 
   public static MembersInjector<MyApplication> create(Provider<Repository> repositoryProvider,
       Provider<OsInfo> osInfoProvider, Provider<Capitalizer> capitalizerProvider,
-      Provider<Logger> loggerProvider, Provider<AInterceptor> aInterceptorProvider,
-      Provider<BInterceptor> bInterceptorProvider) {
-    return new MyApplication_MembersInjector(repositoryProvider, osInfoProvider, capitalizerProvider, loggerProvider, aInterceptorProvider, bInterceptorProvider);
+      Provider<Logger> loggerProvider, Provider<Set<Interceptor>> interceptorsProvider) {
+    return new MyApplication_MembersInjector(repositoryProvider, osInfoProvider, capitalizerProvider, loggerProvider, interceptorsProvider);
   }
 
   @Override
@@ -58,8 +53,7 @@ public final class MyApplication_MembersInjector implements MembersInjector<MyAp
     injectOsInfo(instance, osInfoProvider.get());
     injectCapitalizer(instance, capitalizerProvider.get());
     injectLogger(instance, loggerProvider.get());
-    injectAInterceptor(instance, aInterceptorProvider.get());
-    injectBInterceptor(instance, bInterceptorProvider.get());
+    injectInterceptors(instance, interceptorsProvider.get());
   }
 
   @InjectedFieldSignature("ir.beigirad.dagger.MyApplication.repository")
@@ -83,13 +77,8 @@ public final class MyApplication_MembersInjector implements MembersInjector<MyAp
     instance.logger = logger;
   }
 
-  @InjectedFieldSignature("ir.beigirad.dagger.MyApplication.aInterceptor")
-  public static void injectAInterceptor(MyApplication instance, AInterceptor aInterceptor) {
-    instance.aInterceptor = aInterceptor;
-  }
-
-  @InjectedFieldSignature("ir.beigirad.dagger.MyApplication.bInterceptor")
-  public static void injectBInterceptor(MyApplication instance, BInterceptor bInterceptor) {
-    instance.bInterceptor = bInterceptor;
+  @InjectedFieldSignature("ir.beigirad.dagger.MyApplication.interceptors")
+  public static void injectInterceptors(MyApplication instance, Set<Interceptor> interceptors) {
+    instance.interceptors = interceptors;
   }
 }
