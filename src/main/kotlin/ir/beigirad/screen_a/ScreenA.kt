@@ -4,12 +4,16 @@ import ir.beigirad.dagger.DaggerAppComponent
 import ir.beigirad.dagger.module.OsInfoModule
 import ir.beigirad.dagger.util.Context
 import ir.beigirad.logger.DaggerLoggerComponent
+import ir.beigirad.logger.Logger
 import javax.inject.Inject
 
 class ScreenA {
 
     @Inject
     lateinit var relatedObject: RelatedAObject
+
+    @Inject
+    lateinit var logger: Logger
 
     fun launch() {
         DaggerAppComponent.factory()
@@ -23,7 +27,7 @@ class ScreenA {
             .build()
             .inject(this)
 
-        println("info: $relatedObject")
+        logger.log("info: $relatedObject")
     }
 
     companion object {

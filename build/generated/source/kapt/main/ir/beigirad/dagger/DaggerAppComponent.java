@@ -91,6 +91,7 @@ public final class DaggerAppComponent {
 
     private ScreenA injectScreenA(ScreenA instance) {
       ScreenA_MembersInjector.injectRelatedObject(instance, ScreenAModule_ProvideInfoFactory.provideInfo(screenAModule));
+      ScreenA_MembersInjector.injectLogger(instance, Preconditions.checkNotNullFromComponent(appComponentImpl.loggerComponent.exposeLogger()));
       return instance;
     }
   }
