@@ -1,5 +1,7 @@
 package ir.beigirad.dagger
 
+import ir.beigirad.dagger.interception.AInterceptor
+import ir.beigirad.dagger.interception.BInterceptor
 import ir.beigirad.dagger.module.OsInfoModule
 import ir.beigirad.dagger.qualifier.TypeB
 import ir.beigirad.dagger.util.Context
@@ -22,6 +24,12 @@ class MyApplication {
     @Inject
     lateinit var logger: Logger
 
+    @Inject
+    lateinit var aInterceptor: AInterceptor
+
+    @Inject
+    lateinit var bInterceptor: BInterceptor
+
     fun runApp() {
         val component = DaggerAppComponent.factory()
             .create(
@@ -39,6 +47,11 @@ class MyApplication {
         logger.log("osInfo: $osInfo")
 
         logger.log(capitalizer.capitalize("hello!"))
+
+        // bInterceptor.intercept(aInterceptor.intercept("Bye"))
+        setOf(aInterceptor, bInterceptor)
+            .fold("Bye") { acc, interceptor -> interceptor.intercept(acc) }
+            .also { logger.log(it) }
     }
 
     companion object {
