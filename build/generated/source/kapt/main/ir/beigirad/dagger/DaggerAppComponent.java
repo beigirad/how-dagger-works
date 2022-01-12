@@ -4,8 +4,10 @@ import dagger.internal.DaggerGenerated;
 import dagger.internal.DoubleCheck;
 import dagger.internal.InstanceFactory;
 import dagger.internal.Preconditions;
+import dagger.internal.SetBuilder;
 import ir.beigirad.dagger.interception.AInterceptor;
 import ir.beigirad.dagger.interception.BInterceptor;
+import ir.beigirad.dagger.interception.Interceptor;
 import ir.beigirad.dagger.module.AppModule;
 import ir.beigirad.dagger.module.AppModule_ProvideCapitalizerBFactory;
 import ir.beigirad.dagger.module.AppModule_ProvideCapitalizerFactory;
@@ -18,6 +20,7 @@ import ir.beigirad.screen_a.ScreenAModule;
 import ir.beigirad.screen_a.ScreenAModule_ProvideInfoFactory;
 import ir.beigirad.screen_a.ScreenASubcomponent;
 import ir.beigirad.screen_a.ScreenA_MembersInjector;
+import java.util.Set;
 import javax.annotation.Generated;
 import javax.inject.Provider;
 
@@ -58,6 +61,10 @@ public final class DaggerAppComponent implements AppComponent {
     return new Factory();
   }
 
+  private Set<Interceptor> setOfInterceptor() {
+    return SetBuilder.<Interceptor>newSetBuilder(2).add(new AInterceptor()).add(new BInterceptor()).build();
+  }
+
   @SuppressWarnings("unchecked")
   private void initialize(final AppModule appModuleParam, final OsInfoModule osInfoModuleParam,
       final LoggerComponent loggerComponentParam, final Context contextParam) {
@@ -82,8 +89,7 @@ public final class DaggerAppComponent implements AppComponent {
     MyApplication_MembersInjector.injectOsInfo(instance, OsInfoModule_ProvideLibrariesPathFactory.provideLibrariesPath(osInfoModule));
     MyApplication_MembersInjector.injectCapitalizer(instance, AppModule_ProvideCapitalizerBFactory.provideCapitalizerB(appModule));
     MyApplication_MembersInjector.injectLogger(instance, Preconditions.checkNotNullFromComponent(loggerComponent.exposeLogger()));
-    MyApplication_MembersInjector.injectAInterceptor(instance, new AInterceptor());
-    MyApplication_MembersInjector.injectBInterceptor(instance, new BInterceptor());
+    MyApplication_MembersInjector.injectInterceptors(instance, setOfInterceptor());
     return instance;
   }
 
