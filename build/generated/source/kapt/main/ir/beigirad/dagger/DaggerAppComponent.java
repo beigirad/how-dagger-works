@@ -123,6 +123,7 @@ public final class DaggerAppComponent implements AppComponent {
 
     private ScreenA injectScreenA(ScreenA instance) {
       ScreenA_MembersInjector.injectRelatedObject(instance, ScreenAModule_ProvideInfoFactory.provideInfo(screenAModule));
+      ScreenA_MembersInjector.injectLogger(instance, Preconditions.checkNotNullFromComponent(appComponent.loggerComponent.exposeLogger()));
       return instance;
     }
   }
