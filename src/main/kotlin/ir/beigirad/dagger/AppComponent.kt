@@ -7,6 +7,7 @@ import ir.beigirad.dagger.module.DataModule
 import ir.beigirad.dagger.module.OsInfoModule
 import ir.beigirad.dagger.util.Context
 import ir.beigirad.logger.LoggerComponent
+import ir.beigirad.screen_a.ScreenASubcomponent
 import javax.inject.Singleton
 
 @Singleton
@@ -29,4 +30,6 @@ interface AppComponent {
             loggerComponent: LoggerComponent
         ): AppComponent
     }
+
+    fun screenAComponent(): ScreenASubcomponent
 }
