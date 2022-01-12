@@ -4,6 +4,7 @@ import dagger.BindsInstance
 import dagger.Component
 import ir.beigirad.dagger.module.AppModule
 import ir.beigirad.dagger.module.DataModule
+import ir.beigirad.dagger.module.InterceptorModule
 import ir.beigirad.dagger.module.OsInfoModule
 import ir.beigirad.dagger.util.Context
 import ir.beigirad.logger.LoggerComponent
@@ -16,6 +17,7 @@ import javax.inject.Singleton
         AppModule::class,
         DataModule::class,
         OsInfoModule::class,
+        InterceptorModule::class
     ],
     dependencies = [LoggerComponent::class]
 )
