@@ -4,9 +4,9 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class ScreenAModule {
+class ScreenAModule(val type: String) {
     @Provides
     fun provideInfo(): RelatedAObject {
-        return RelatedAObject(name = "Feature * A *")
+        return RelatedAObject(name = "Feature * A *. type=$type")
     }
 }
