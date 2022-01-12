@@ -18,7 +18,7 @@ class ScreenA {
                 os = OsInfoModule(System.getProperties()),
                 loggerComponent = DaggerLoggerComponent.factory().create(Context())
             )
-            .screenAComponent()
+            .screenAComponent(ScreenAModule("A"))
             .inject(this)
 
         println("info: $relatedObject")
