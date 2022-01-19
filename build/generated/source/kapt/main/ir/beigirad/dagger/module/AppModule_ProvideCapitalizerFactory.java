@@ -6,7 +6,9 @@ import dagger.internal.Preconditions;
 import dagger.internal.QualifierMetadata;
 import dagger.internal.ScopeMetadata;
 import ir.beigirad.dagger.Capitalizer;
+import java.util.Locale;
 import javax.annotation.Generated;
+import javax.inject.Provider;
 
 @ScopeMetadata
 @QualifierMetadata
@@ -22,20 +24,24 @@ import javax.annotation.Generated;
 public final class AppModule_ProvideCapitalizerFactory implements Factory<Capitalizer> {
   private final AppModule module;
 
-  public AppModule_ProvideCapitalizerFactory(AppModule module) {
+  private final Provider<Locale> localeProvider;
+
+  public AppModule_ProvideCapitalizerFactory(AppModule module, Provider<Locale> localeProvider) {
     this.module = module;
+    this.localeProvider = localeProvider;
   }
 
   @Override
   public Capitalizer get() {
-    return provideCapitalizer(module);
+    return provideCapitalizer(module, localeProvider.get());
   }
 
-  public static AppModule_ProvideCapitalizerFactory create(AppModule module) {
-    return new AppModule_ProvideCapitalizerFactory(module);
+  public static AppModule_ProvideCapitalizerFactory create(AppModule module,
+      Provider<Locale> localeProvider) {
+    return new AppModule_ProvideCapitalizerFactory(module, localeProvider);
   }
 
-  public static Capitalizer provideCapitalizer(AppModule instance) {
-    return Preconditions.checkNotNullFromProvides(instance.provideCapitalizer());
+  public static Capitalizer provideCapitalizer(AppModule instance, Locale locale) {
+    return Preconditions.checkNotNullFromProvides(instance.provideCapitalizer(locale));
   }
 }
