@@ -4,6 +4,7 @@ import dagger.internal.DaggerGenerated;
 import dagger.internal.Preconditions;
 import ir.beigirad.dagger.module.AppModule;
 import ir.beigirad.dagger.module.AppModule_ProvideCapitalizerFactory;
+import ir.beigirad.dagger.module.AppModule_ProvideLocaleFactory;
 import javax.annotation.Generated;
 
 @DaggerGenerated
@@ -33,8 +34,12 @@ public final class DaggerAppComponent implements AppComponent {
     return new Builder().build();
   }
 
+  private Capitalizer capitalizer() {
+    return AppModule_ProvideCapitalizerFactory.provideCapitalizer(appModule, AppModule_ProvideLocaleFactory.provideLocale(appModule));
+  }
+
   private Repository repository() {
-    return new Repository(AppModule_ProvideCapitalizerFactory.provideCapitalizer(appModule));
+    return new Repository(capitalizer());
   }
 
   @Override
