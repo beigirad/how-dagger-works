@@ -7,7 +7,7 @@ import ir.beigirad.dagger.interception.Interceptor;
 import ir.beigirad.dagger.qualifier.TypeB;
 import ir.beigirad.dagger.util.OsInfo;
 import ir.beigirad.logger.Logger;
-import java.util.Set;
+import java.util.Map;
 import javax.annotation.Generated;
 import javax.inject.Provider;
 
@@ -29,11 +29,11 @@ public final class MyApplication_MembersInjector implements MembersInjector<MyAp
 
   private final Provider<Logger> loggerProvider;
 
-  private final Provider<Set<Interceptor>> interceptorsProvider;
+  private final Provider<Map<String, Interceptor>> interceptorsProvider;
 
   public MyApplication_MembersInjector(Provider<Repository> repositoryProvider,
       Provider<OsInfo> osInfoProvider, Provider<Capitalizer> capitalizerProvider,
-      Provider<Logger> loggerProvider, Provider<Set<Interceptor>> interceptorsProvider) {
+      Provider<Logger> loggerProvider, Provider<Map<String, Interceptor>> interceptorsProvider) {
     this.repositoryProvider = repositoryProvider;
     this.osInfoProvider = osInfoProvider;
     this.capitalizerProvider = capitalizerProvider;
@@ -43,7 +43,7 @@ public final class MyApplication_MembersInjector implements MembersInjector<MyAp
 
   public static MembersInjector<MyApplication> create(Provider<Repository> repositoryProvider,
       Provider<OsInfo> osInfoProvider, Provider<Capitalizer> capitalizerProvider,
-      Provider<Logger> loggerProvider, Provider<Set<Interceptor>> interceptorsProvider) {
+      Provider<Logger> loggerProvider, Provider<Map<String, Interceptor>> interceptorsProvider) {
     return new MyApplication_MembersInjector(repositoryProvider, osInfoProvider, capitalizerProvider, loggerProvider, interceptorsProvider);
   }
 
@@ -78,7 +78,8 @@ public final class MyApplication_MembersInjector implements MembersInjector<MyAp
   }
 
   @InjectedFieldSignature("ir.beigirad.dagger.MyApplication.interceptors")
-  public static void injectInterceptors(MyApplication instance, Set<Interceptor> interceptors) {
+  public static void injectInterceptors(MyApplication instance,
+      Map<String, Interceptor> interceptors) {
     instance.interceptors = interceptors;
   }
 }
