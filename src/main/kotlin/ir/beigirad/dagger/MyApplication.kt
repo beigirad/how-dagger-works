@@ -27,15 +27,22 @@ class MyApplication {
     lateinit var interceptors: Map<String, @JvmSuppressWildcards Interceptor>
 
     fun runApp() {
+        println("before creating component")
         val component = DaggerAppComponent.factory()
             .create(
                 context = Context(),
                 os = OsInfoModule(System.getProperties()),
                 loggerComponent = DaggerLoggerComponent.factory().create(Context())
             )
+        println("after creating component")
 
+        println(">>>>>>> before first inject component")
         component.inject(this)
+        println("<<<<<<< after first inject component")
+
+        println(">>>>>>> before second inject component")
         component.inject(this)
+        println("<<<<<<< after second inject component")
 
         val users = repository.getUsersName()
         logger.log("users: $users")
