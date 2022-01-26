@@ -13,3 +13,13 @@ dependencies {
     implementation 'com.google.dagger:dagger:2.40'
     kapt 'com.google.dagger:dagger-compiler:2.40'
 }
+
+allprojects {
+    afterEvaluate {
+        // https://dagger.dev/dev-guide/compiler-options
+        extensions.findByName('kapt')?.arguments {
+            // arg("dagger.fastInit", "enabled")
+            // arg("dagger.formatGeneratedSource", "enabled")
+        }
+    }
+}
