@@ -1,7 +1,9 @@
 package ir.beigirad.dagger;
 
+import dagger.Lazy;
 import dagger.MembersInjector;
 import dagger.internal.DaggerGenerated;
+import dagger.internal.DoubleCheck;
 import dagger.internal.InjectedFieldSignature;
 import ir.beigirad.dagger.interception.Interceptor;
 import ir.beigirad.dagger.qualifier.TypeB;
@@ -51,7 +53,7 @@ public final class MyApplication_MembersInjector implements MembersInjector<MyAp
   public void injectMembers(MyApplication instance) {
     injectRepository(instance, repositoryProvider.get());
     injectOsInfo(instance, osInfoProvider.get());
-    injectCapitalizer(instance, capitalizerProvider);
+    injectCapitalizer(instance, DoubleCheck.lazy(capitalizerProvider));
     injectLogger(instance, loggerProvider.get());
     injectInterceptors(instance, interceptorsProvider.get());
   }
@@ -68,7 +70,7 @@ public final class MyApplication_MembersInjector implements MembersInjector<MyAp
 
   @InjectedFieldSignature("ir.beigirad.dagger.MyApplication.capitalizer")
   @TypeB
-  public static void injectCapitalizer(MyApplication instance, Provider<Capitalizer> capitalizer) {
+  public static void injectCapitalizer(MyApplication instance, Lazy<Capitalizer> capitalizer) {
     instance.capitalizer = capitalizer;
   }
 
