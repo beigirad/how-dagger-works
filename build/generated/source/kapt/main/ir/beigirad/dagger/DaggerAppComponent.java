@@ -153,7 +153,7 @@ public final class DaggerAppComponent {
     private MyApplication injectMyApplication(MyApplication instance) {
       MyApplication_MembersInjector.injectRepository(instance, repositoryImplProvider.get());
       MyApplication_MembersInjector.injectOsInfo(instance, OsInfoModule_ProvideLibrariesPathFactory.provideLibrariesPath(osInfoModule));
-      MyApplication_MembersInjector.injectCapitalizer(instance, provideCapitalizerBProvider);
+      MyApplication_MembersInjector.injectCapitalizer(instance, DoubleCheck.lazy(provideCapitalizerBProvider));
       MyApplication_MembersInjector.injectLogger(instance, Preconditions.checkNotNullFromComponent(loggerComponent.exposeLogger()));
       MyApplication_MembersInjector.injectInterceptors(instance, mapOfStringAndInterceptor());
       return instance;

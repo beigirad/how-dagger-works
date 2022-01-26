@@ -1,5 +1,6 @@
 package ir.beigirad.dagger
 
+import dagger.Lazy
 import ir.beigirad.dagger.interception.Interceptor
 import ir.beigirad.dagger.module.OsInfoModule
 import ir.beigirad.dagger.qualifier.TypeB
@@ -8,7 +9,6 @@ import ir.beigirad.dagger.util.OsInfo
 import ir.beigirad.logger.DaggerLoggerComponent
 import ir.beigirad.logger.Logger
 import javax.inject.Inject
-import javax.inject.Provider
 
 class MyApplication {
     @Inject
@@ -19,7 +19,7 @@ class MyApplication {
 
     @TypeB
     @Inject
-    lateinit var capitalizer: Provider<Capitalizer>
+    lateinit var capitalizer: Lazy<Capitalizer>
 
     @Inject
     lateinit var logger: Logger
