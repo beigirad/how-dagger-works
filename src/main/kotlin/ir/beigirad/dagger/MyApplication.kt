@@ -8,6 +8,7 @@ import ir.beigirad.dagger.util.OsInfo
 import ir.beigirad.logger.DaggerLoggerComponent
 import ir.beigirad.logger.Logger
 import javax.inject.Inject
+import javax.inject.Provider
 
 class MyApplication {
     @Inject
@@ -18,7 +19,7 @@ class MyApplication {
 
     @TypeB
     @Inject
-    lateinit var capitalizer: Capitalizer
+    lateinit var capitalizer: Provider<Capitalizer>
 
     @Inject
     lateinit var logger: Logger
@@ -49,7 +50,8 @@ class MyApplication {
 
         logger.log("osInfo: $osInfo")
 
-        logger.log(capitalizer.capitalize("hello!"))
+        logger.log(capitalizer.get().capitalize("hello!"))
+        logger.log(capitalizer.get().capitalize("hello again!"))
 
         // bInterceptor.intercept(aInterceptor.intercept("Bye"))
         interceptors

@@ -38,8 +38,6 @@ import javax.inject.Provider;
 public final class DaggerAppComponent implements AppComponent {
   private final OsInfoModule osInfoModule;
 
-  private final AppModule appModule;
-
   private final LoggerComponent loggerComponent;
 
   private final DaggerAppComponent appComponent = this;
@@ -52,10 +50,11 @@ public final class DaggerAppComponent implements AppComponent {
 
   private Provider<RepositoryImpl> repositoryImplProvider;
 
+  private Provider<Capitalizer> provideCapitalizerBProvider;
+
   private DaggerAppComponent(AppModule appModuleParam, OsInfoModule osInfoModuleParam,
       LoggerComponent loggerComponentParam, Context contextParam) {
     this.osInfoModule = osInfoModuleParam;
-    this.appModule = appModuleParam;
     this.loggerComponent = loggerComponentParam;
     initialize(appModuleParam, osInfoModuleParam, loggerComponentParam, contextParam);
 
@@ -63,10 +62,6 @@ public final class DaggerAppComponent implements AppComponent {
 
   public static AppComponent.Factory factory() {
     return new Factory();
-  }
-
-  private Capitalizer typeBCapitalizer() {
-    return AppModule_ProvideCapitalizerBFactory.provideCapitalizerB(appModule, AppModule_ProvideLocaleFactory.provideLocale(appModule));
   }
 
   private Map<String, Interceptor> mapOfStringAndInterceptor() {
@@ -80,6 +75,7 @@ public final class DaggerAppComponent implements AppComponent {
     this.provideLocaleProvider = AppModule_ProvideLocaleFactory.create(appModuleParam);
     this.provideCapitalizerProvider = AppModule_ProvideCapitalizerFactory.create(appModuleParam, provideLocaleProvider);
     this.repositoryImplProvider = DoubleCheck.provider(RepositoryImpl_Factory.create(contextProvider, provideCapitalizerProvider));
+    this.provideCapitalizerBProvider = AppModule_ProvideCapitalizerBFactory.create(appModuleParam, provideLocaleProvider);
   }
 
   @Override
@@ -96,7 +92,7 @@ public final class DaggerAppComponent implements AppComponent {
   private MyApplication injectMyApplication(MyApplication instance) {
     MyApplication_MembersInjector.injectRepository(instance, repositoryImplProvider.get());
     MyApplication_MembersInjector.injectOsInfo(instance, OsInfoModule_ProvideLibrariesPathFactory.provideLibrariesPath(osInfoModule));
-    MyApplication_MembersInjector.injectCapitalizer(instance, typeBCapitalizer());
+    MyApplication_MembersInjector.injectCapitalizer(instance, provideCapitalizerBProvider);
     MyApplication_MembersInjector.injectLogger(instance, Preconditions.checkNotNullFromComponent(loggerComponent.exposeLogger()));
     MyApplication_MembersInjector.injectInterceptors(instance, mapOfStringAndInterceptor());
     return instance;
