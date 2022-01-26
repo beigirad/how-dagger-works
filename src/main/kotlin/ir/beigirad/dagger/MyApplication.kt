@@ -24,7 +24,7 @@ class MyApplication {
     lateinit var logger: Logger
 
     @Inject
-    lateinit var interceptors: Set<@JvmSuppressWildcards Interceptor>
+    lateinit var interceptors: Map<String, @JvmSuppressWildcards Interceptor>
 
     fun runApp() {
         val component = DaggerAppComponent.factory()
@@ -46,6 +46,8 @@ class MyApplication {
 
         // bInterceptor.intercept(aInterceptor.intercept("Bye"))
         interceptors
+            .onEach { logger.log("interceptor ${it.key}") }
+            .values
             .fold("Bye") { acc, interceptor -> interceptor.intercept(acc) }
             .also { logger.log(it) }
     }

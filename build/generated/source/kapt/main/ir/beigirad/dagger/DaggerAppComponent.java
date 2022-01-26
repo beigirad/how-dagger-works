@@ -3,8 +3,8 @@ package ir.beigirad.dagger;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.DoubleCheck;
 import dagger.internal.InstanceFactory;
+import dagger.internal.MapBuilder;
 import dagger.internal.Preconditions;
-import dagger.internal.SetBuilder;
 import ir.beigirad.dagger.interception.AInterceptor;
 import ir.beigirad.dagger.interception.BInterceptor;
 import ir.beigirad.dagger.interception.Interceptor;
@@ -22,7 +22,7 @@ import ir.beigirad.screen_a.ScreenAModule_ProvideInfoFactory;
 import ir.beigirad.screen_a.ScreenASubcomponent;
 import ir.beigirad.screen_a.ScreenA_MembersInjector;
 import java.util.Locale;
-import java.util.Set;
+import java.util.Map;
 import javax.annotation.Generated;
 import javax.inject.Provider;
 
@@ -131,8 +131,8 @@ public final class DaggerAppComponent {
       return AppModule_ProvideCapitalizerBFactory.provideCapitalizerB(appModule, AppModule_ProvideLocaleFactory.provideLocale(appModule));
     }
 
-    private Set<Interceptor> setOfInterceptor() {
-      return SetBuilder.<Interceptor>newSetBuilder(2).add(new AInterceptor()).add(new BInterceptor()).build();
+    private Map<String, Interceptor> mapOfStringAndInterceptor() {
+      return MapBuilder.<String, Interceptor>newMapBuilder(2).put("I_A", new AInterceptor()).put("I_B", new BInterceptor()).build();
     }
 
     @SuppressWarnings("unchecked")
@@ -159,7 +159,7 @@ public final class DaggerAppComponent {
       MyApplication_MembersInjector.injectOsInfo(instance, OsInfoModule_ProvideLibrariesPathFactory.provideLibrariesPath(osInfoModule));
       MyApplication_MembersInjector.injectCapitalizer(instance, typeBCapitalizer());
       MyApplication_MembersInjector.injectLogger(instance, Preconditions.checkNotNullFromComponent(loggerComponent.exposeLogger()));
-      MyApplication_MembersInjector.injectInterceptors(instance, setOfInterceptor());
+      MyApplication_MembersInjector.injectInterceptors(instance, mapOfStringAndInterceptor());
       return instance;
     }
   }
