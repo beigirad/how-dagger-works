@@ -15,6 +15,7 @@ import ir.beigirad.dagger.module.AppModule_ProvideLocaleFactory;
 import ir.beigirad.dagger.module.OsInfoModule;
 import ir.beigirad.dagger.module.OsInfoModule_ProvideLibrariesPathFactory;
 import ir.beigirad.dagger.util.Context;
+import ir.beigirad.logger.Logger;
 import ir.beigirad.logger.LoggerComponent;
 import ir.beigirad.screen_a.ScreenA;
 import ir.beigirad.screen_a.ScreenAModule;
@@ -40,8 +41,6 @@ public final class DaggerAppComponent implements AppComponent {
 
   private final LoggerComponent loggerComponent;
 
-  private final Context context;
-
   private final DaggerAppComponent appComponent = this;
 
   private Provider<Context> contextProvider;
@@ -54,11 +53,16 @@ public final class DaggerAppComponent implements AppComponent {
 
   private Provider<Capitalizer> provideCapitalizerBProvider;
 
+  private Provider<Logger> exposeLoggerProvider;
+
+  private AssistedObject_Factory assistedObjectProvider;
+
+  private Provider<AssistedObject.Factory> factoryProvider;
+
   private DaggerAppComponent(AppModule appModuleParam, OsInfoModule osInfoModuleParam,
       LoggerComponent loggerComponentParam, Context contextParam) {
     this.osInfoModule = osInfoModuleParam;
     this.loggerComponent = loggerComponentParam;
-    this.context = contextParam;
     initialize(appModuleParam, osInfoModuleParam, loggerComponentParam, contextParam);
 
   }
@@ -71,10 +75,6 @@ public final class DaggerAppComponent implements AppComponent {
     return MapBuilder.<String, Interceptor>newMapBuilder(2).put("I_A", new AInterceptor()).put("I_B", new BInterceptor()).build();
   }
 
-  private AssistedObject assistedObject() {
-    return new AssistedObject(Preconditions.checkNotNullFromComponent(loggerComponent.exposeLogger()), context);
-  }
-
   @SuppressWarnings("unchecked")
   private void initialize(final AppModule appModuleParam, final OsInfoModule osInfoModuleParam,
       final LoggerComponent loggerComponentParam, final Context contextParam) {
@@ -83,6 +83,9 @@ public final class DaggerAppComponent implements AppComponent {
     this.provideCapitalizerProvider = AppModule_ProvideCapitalizerFactory.create(appModuleParam, provideLocaleProvider);
     this.repositoryImplProvider = DoubleCheck.provider(RepositoryImpl_Factory.create(contextProvider, provideCapitalizerProvider));
     this.provideCapitalizerBProvider = AppModule_ProvideCapitalizerBFactory.create(appModuleParam, provideLocaleProvider);
+    this.exposeLoggerProvider = new ir_beigirad_logger_LoggerComponent_exposeLogger(loggerComponentParam);
+    this.assistedObjectProvider = AssistedObject_Factory.create(exposeLoggerProvider, contextProvider);
+    this.factoryProvider = AssistedObject_Factory_Impl.create(assistedObjectProvider);
   }
 
   @Override
@@ -102,7 +105,7 @@ public final class DaggerAppComponent implements AppComponent {
     MyApplication_MembersInjector.injectCapitalizer(instance, DoubleCheck.lazy(provideCapitalizerBProvider));
     MyApplication_MembersInjector.injectLogger(instance, Preconditions.checkNotNullFromComponent(loggerComponent.exposeLogger()));
     MyApplication_MembersInjector.injectInterceptors(instance, mapOfStringAndInterceptor());
-    MyApplication_MembersInjector.injectAssistedObject(instance, assistedObject());
+    MyApplication_MembersInjector.injectAssistedObjectFactory(instance, factoryProvider.get());
     return instance;
   }
 
@@ -113,6 +116,19 @@ public final class DaggerAppComponent implements AppComponent {
       Preconditions.checkNotNull(os);
       Preconditions.checkNotNull(loggerComponent);
       return new DaggerAppComponent(new AppModule(), os, loggerComponent, context);
+    }
+  }
+
+  private static final class ir_beigirad_logger_LoggerComponent_exposeLogger implements Provider<Logger> {
+    private final LoggerComponent loggerComponent;
+
+    ir_beigirad_logger_LoggerComponent_exposeLogger(LoggerComponent loggerComponent) {
+      this.loggerComponent = loggerComponent;
+    }
+
+    @Override
+    public Logger get() {
+      return Preconditions.checkNotNullFromComponent(loggerComponent.exposeLogger());
     }
   }
 
@@ -131,8 +147,8 @@ public final class DaggerAppComponent implements AppComponent {
     }
 
     @Override
-    public void inject(ScreenA arg0) {
-      injectScreenA(arg0);
+    public void inject(ScreenA screenA) {
+      injectScreenA(screenA);
     }
 
     private ScreenA injectScreenA(ScreenA instance) {

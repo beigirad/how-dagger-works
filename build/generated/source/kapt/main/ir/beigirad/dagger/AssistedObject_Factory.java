@@ -1,7 +1,6 @@
 package ir.beigirad.dagger;
 
 import dagger.internal.DaggerGenerated;
-import dagger.internal.Factory;
 import ir.beigirad.dagger.util.Context;
 import ir.beigirad.logger.Logger;
 import javax.annotation.Generated;
@@ -16,7 +15,7 @@ import javax.inject.Provider;
     "unchecked",
     "rawtypes"
 })
-public final class AssistedObject_Factory implements Factory<AssistedObject> {
+public final class AssistedObject_Factory {
   private final Provider<Logger> loggerProvider;
 
   private final Provider<Context> contextProvider;
@@ -27,9 +26,8 @@ public final class AssistedObject_Factory implements Factory<AssistedObject> {
     this.contextProvider = contextProvider;
   }
 
-  @Override
-  public AssistedObject get() {
-    return newInstance(loggerProvider.get(), contextProvider.get());
+  public AssistedObject get(int id) {
+    return newInstance(loggerProvider.get(), contextProvider.get(), id);
   }
 
   public static AssistedObject_Factory create(Provider<Logger> loggerProvider,
@@ -37,7 +35,7 @@ public final class AssistedObject_Factory implements Factory<AssistedObject> {
     return new AssistedObject_Factory(loggerProvider, contextProvider);
   }
 
-  public static AssistedObject newInstance(Logger logger, Context context) {
-    return new AssistedObject(logger, context);
+  public static AssistedObject newInstance(Logger logger, Context context, int id) {
+    return new AssistedObject(logger, context, id);
   }
 }
