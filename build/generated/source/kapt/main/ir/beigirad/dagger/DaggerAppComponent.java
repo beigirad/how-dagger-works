@@ -106,6 +106,8 @@ public final class DaggerAppComponent {
 
     private final LoggerComponent loggerComponent;
 
+    private final Context context;
+
     private final AppComponentImpl appComponentImpl = this;
 
     private Provider<Context> contextProvider;
@@ -122,12 +124,17 @@ public final class DaggerAppComponent {
         LoggerComponent loggerComponentParam, Context contextParam) {
       this.osInfoModule = osInfoModuleParam;
       this.loggerComponent = loggerComponentParam;
+      this.context = contextParam;
       initialize(appModuleParam, osInfoModuleParam, loggerComponentParam, contextParam);
 
     }
 
     private Map<String, Interceptor> mapOfStringAndInterceptor() {
       return MapBuilder.<String, Interceptor>newMapBuilder(2).put("I_A", new AInterceptor()).put("I_B", new BInterceptor()).build();
+    }
+
+    private AssistedObject assistedObject() {
+      return new AssistedObject(Preconditions.checkNotNullFromComponent(loggerComponent.exposeLogger()), context);
     }
 
     @SuppressWarnings("unchecked")
@@ -156,6 +163,7 @@ public final class DaggerAppComponent {
       MyApplication_MembersInjector.injectCapitalizer(instance, DoubleCheck.lazy(provideCapitalizerBProvider));
       MyApplication_MembersInjector.injectLogger(instance, Preconditions.checkNotNullFromComponent(loggerComponent.exposeLogger()));
       MyApplication_MembersInjector.injectInterceptors(instance, mapOfStringAndInterceptor());
+      MyApplication_MembersInjector.injectAssistedObject(instance, assistedObject());
       return instance;
     }
   }
