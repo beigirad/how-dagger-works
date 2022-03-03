@@ -28,7 +28,7 @@ class MyApplication {
     lateinit var interceptors: Map<String, @JvmSuppressWildcards Interceptor>
 
     @Inject
-    lateinit var assistedObject: AssistedObject
+    lateinit var assistedObjectFactory: AssistedObject.Factory
 
     fun runApp() {
         println("before creating component")
@@ -63,6 +63,7 @@ class MyApplication {
             .fold("Bye") { acc, interceptor -> interceptor.intercept(acc) }
             .also { logger.log(it) }
 
+        val assistedObject = assistedObjectFactory.create(12)
         assistedObject.doSth()
     }
 

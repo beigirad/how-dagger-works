@@ -15,6 +15,7 @@ import ir.beigirad.dagger.module.AppModule_ProvideLocaleFactory;
 import ir.beigirad.dagger.module.OsInfoModule;
 import ir.beigirad.dagger.module.OsInfoModule_ProvideLibrariesPathFactory;
 import ir.beigirad.dagger.util.Context;
+import ir.beigirad.logger.Logger;
 import ir.beigirad.logger.LoggerComponent;
 import ir.beigirad.screen_a.ScreenA;
 import ir.beigirad.screen_a.ScreenAModule;
@@ -106,8 +107,6 @@ public final class DaggerAppComponent {
 
     private final LoggerComponent loggerComponent;
 
-    private final Context context;
-
     private final AppComponentImpl appComponentImpl = this;
 
     private Provider<Context> contextProvider;
@@ -120,21 +119,22 @@ public final class DaggerAppComponent {
 
     private Provider<Capitalizer> provideCapitalizerBProvider;
 
+    private Provider<Logger> exposeLoggerProvider;
+
+    private AssistedObject_Factory assistedObjectProvider;
+
+    private Provider<AssistedObject.Factory> factoryProvider;
+
     private AppComponentImpl(AppModule appModuleParam, OsInfoModule osInfoModuleParam,
         LoggerComponent loggerComponentParam, Context contextParam) {
       this.osInfoModule = osInfoModuleParam;
       this.loggerComponent = loggerComponentParam;
-      this.context = contextParam;
       initialize(appModuleParam, osInfoModuleParam, loggerComponentParam, contextParam);
 
     }
 
     private Map<String, Interceptor> mapOfStringAndInterceptor() {
       return MapBuilder.<String, Interceptor>newMapBuilder(2).put("I_A", new AInterceptor()).put("I_B", new BInterceptor()).build();
-    }
-
-    private AssistedObject assistedObject() {
-      return new AssistedObject(Preconditions.checkNotNullFromComponent(loggerComponent.exposeLogger()), context);
     }
 
     @SuppressWarnings("unchecked")
@@ -145,6 +145,9 @@ public final class DaggerAppComponent {
       this.provideCapitalizerProvider = AppModule_ProvideCapitalizerFactory.create(appModuleParam, provideLocaleProvider);
       this.repositoryImplProvider = DoubleCheck.provider(RepositoryImpl_Factory.create(contextProvider, provideCapitalizerProvider));
       this.provideCapitalizerBProvider = AppModule_ProvideCapitalizerBFactory.create(appModuleParam, provideLocaleProvider);
+      this.exposeLoggerProvider = new ExposeLoggerProvider(loggerComponentParam);
+      this.assistedObjectProvider = AssistedObject_Factory.create(exposeLoggerProvider, contextProvider);
+      this.factoryProvider = AssistedObject_Factory_Impl.create(assistedObjectProvider);
     }
 
     @Override
@@ -163,8 +166,21 @@ public final class DaggerAppComponent {
       MyApplication_MembersInjector.injectCapitalizer(instance, DoubleCheck.lazy(provideCapitalizerBProvider));
       MyApplication_MembersInjector.injectLogger(instance, Preconditions.checkNotNullFromComponent(loggerComponent.exposeLogger()));
       MyApplication_MembersInjector.injectInterceptors(instance, mapOfStringAndInterceptor());
-      MyApplication_MembersInjector.injectAssistedObject(instance, assistedObject());
+      MyApplication_MembersInjector.injectAssistedObjectFactory(instance, factoryProvider.get());
       return instance;
+    }
+
+    private static final class ExposeLoggerProvider implements Provider<Logger> {
+      private final LoggerComponent loggerComponent;
+
+      ExposeLoggerProvider(LoggerComponent loggerComponent) {
+        this.loggerComponent = loggerComponent;
+      }
+
+      @Override
+      public Logger get() {
+        return Preconditions.checkNotNullFromComponent(loggerComponent.exposeLogger());
+      }
     }
   }
 }
