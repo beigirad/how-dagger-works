@@ -27,6 +27,9 @@ class MyApplication {
     @Inject
     lateinit var interceptors: Map<String, @JvmSuppressWildcards Interceptor>
 
+    @Inject
+    lateinit var assistedObject: AssistedObject
+
     fun runApp() {
         println("before creating component")
         val component = DaggerAppComponent.factory()
@@ -59,6 +62,8 @@ class MyApplication {
             .values
             .fold("Bye") { acc, interceptor -> interceptor.intercept(acc) }
             .also { logger.log(it) }
+
+        assistedObject.doSth()
     }
 
     companion object {

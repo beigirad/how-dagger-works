@@ -40,6 +40,8 @@ public final class DaggerAppComponent implements AppComponent {
 
   private final LoggerComponent loggerComponent;
 
+  private final Context context;
+
   private final DaggerAppComponent appComponent = this;
 
   private Provider<Context> contextProvider;
@@ -56,6 +58,7 @@ public final class DaggerAppComponent implements AppComponent {
       LoggerComponent loggerComponentParam, Context contextParam) {
     this.osInfoModule = osInfoModuleParam;
     this.loggerComponent = loggerComponentParam;
+    this.context = contextParam;
     initialize(appModuleParam, osInfoModuleParam, loggerComponentParam, contextParam);
 
   }
@@ -66,6 +69,10 @@ public final class DaggerAppComponent implements AppComponent {
 
   private Map<String, Interceptor> mapOfStringAndInterceptor() {
     return MapBuilder.<String, Interceptor>newMapBuilder(2).put("I_A", new AInterceptor()).put("I_B", new BInterceptor()).build();
+  }
+
+  private AssistedObject assistedObject() {
+    return new AssistedObject(Preconditions.checkNotNullFromComponent(loggerComponent.exposeLogger()), context);
   }
 
   @SuppressWarnings("unchecked")
@@ -95,6 +102,7 @@ public final class DaggerAppComponent implements AppComponent {
     MyApplication_MembersInjector.injectCapitalizer(instance, DoubleCheck.lazy(provideCapitalizerBProvider));
     MyApplication_MembersInjector.injectLogger(instance, Preconditions.checkNotNullFromComponent(loggerComponent.exposeLogger()));
     MyApplication_MembersInjector.injectInterceptors(instance, mapOfStringAndInterceptor());
+    MyApplication_MembersInjector.injectAssistedObject(instance, assistedObject());
     return instance;
   }
 
@@ -123,8 +131,8 @@ public final class DaggerAppComponent implements AppComponent {
     }
 
     @Override
-    public void inject(ScreenA screenA) {
-      injectScreenA(screenA);
+    public void inject(ScreenA arg0) {
+      injectScreenA(arg0);
     }
 
     private ScreenA injectScreenA(ScreenA instance) {

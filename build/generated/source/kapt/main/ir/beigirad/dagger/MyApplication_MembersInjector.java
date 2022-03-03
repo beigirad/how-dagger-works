@@ -33,20 +33,25 @@ public final class MyApplication_MembersInjector implements MembersInjector<MyAp
 
   private final Provider<Map<String, Interceptor>> interceptorsProvider;
 
+  private final Provider<AssistedObject> assistedObjectProvider;
+
   public MyApplication_MembersInjector(Provider<Repository> repositoryProvider,
       Provider<OsInfo> osInfoProvider, Provider<Capitalizer> capitalizerProvider,
-      Provider<Logger> loggerProvider, Provider<Map<String, Interceptor>> interceptorsProvider) {
+      Provider<Logger> loggerProvider, Provider<Map<String, Interceptor>> interceptorsProvider,
+      Provider<AssistedObject> assistedObjectProvider) {
     this.repositoryProvider = repositoryProvider;
     this.osInfoProvider = osInfoProvider;
     this.capitalizerProvider = capitalizerProvider;
     this.loggerProvider = loggerProvider;
     this.interceptorsProvider = interceptorsProvider;
+    this.assistedObjectProvider = assistedObjectProvider;
   }
 
   public static MembersInjector<MyApplication> create(Provider<Repository> repositoryProvider,
       Provider<OsInfo> osInfoProvider, Provider<Capitalizer> capitalizerProvider,
-      Provider<Logger> loggerProvider, Provider<Map<String, Interceptor>> interceptorsProvider) {
-    return new MyApplication_MembersInjector(repositoryProvider, osInfoProvider, capitalizerProvider, loggerProvider, interceptorsProvider);
+      Provider<Logger> loggerProvider, Provider<Map<String, Interceptor>> interceptorsProvider,
+      Provider<AssistedObject> assistedObjectProvider) {
+    return new MyApplication_MembersInjector(repositoryProvider, osInfoProvider, capitalizerProvider, loggerProvider, interceptorsProvider, assistedObjectProvider);
   }
 
   @Override
@@ -56,6 +61,7 @@ public final class MyApplication_MembersInjector implements MembersInjector<MyAp
     injectCapitalizer(instance, DoubleCheck.lazy(capitalizerProvider));
     injectLogger(instance, loggerProvider.get());
     injectInterceptors(instance, interceptorsProvider.get());
+    injectAssistedObject(instance, assistedObjectProvider.get());
   }
 
   @InjectedFieldSignature("ir.beigirad.dagger.MyApplication.repository")
@@ -83,5 +89,10 @@ public final class MyApplication_MembersInjector implements MembersInjector<MyAp
   public static void injectInterceptors(MyApplication instance,
       Map<String, Interceptor> interceptors) {
     instance.interceptors = interceptors;
+  }
+
+  @InjectedFieldSignature("ir.beigirad.dagger.MyApplication.assistedObject")
+  public static void injectAssistedObject(MyApplication instance, AssistedObject assistedObject) {
+    instance.assistedObject = assistedObject;
   }
 }
