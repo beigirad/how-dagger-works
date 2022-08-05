@@ -5,8 +5,8 @@ import dagger.hilt.android.HiltAndroidApp
 import ir.beigirad.app.logger.Logger
 import javax.inject.Inject
 
-@HiltAndroidApp(Application::class)
-class MyApplication : Hilt_MyApplication() {
+@HiltAndroidApp
+class MyApplication : Application() {
     @Inject
     lateinit var logger: Logger
 

@@ -2220,6 +2220,21 @@ No dependencies
 default - Configuration for default artifacts. (n)
 No dependencies
 
+hiltCompileOnlyDebug
+No dependencies
+
+hiltCompileOnlyDebugAndroidTest
+No dependencies
+
+hiltCompileOnlyDebugUnitTest
+No dependencies
+
+hiltCompileOnlyRelease
+No dependencies
+
+hiltCompileOnlyReleaseUnitTest
+No dependencies
+
 implementation - Implementation only dependencies for 'main' sources. (n)
 +--- androidx.core:core-ktx:1.8.0 (n)
 +--- androidx.fragment:fragment-ktx:1.5.1 (n)
@@ -5158,5 +5173,5 @@ No dependencies
 
 A web-based, searchable dependency report is available by adding the --scan option.
 
-BUILD SUCCESSFUL in 1s
+BUILD SUCCESSFUL in 3s
 1 actionable task: 1 executed

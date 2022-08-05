@@ -12,8 +12,8 @@ import ir.beigirad.app.screens.HomeFragment
 import ir.beigirad.app.screens.SecondFragment
 import javax.inject.Inject
 
-@AndroidEntryPoint(AppCompatActivity::class)
-class MainActivity : Hilt_MainActivity() {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var logger: Logger
 

@@ -16,8 +16,8 @@ import ir.beigirad.app.logger.Logger
 import ir.beigirad.app.toPx
 import javax.inject.Inject
 
-@AndroidEntryPoint(Fragment::class)
-class SecondFragment : Hilt_SecondFragment() {
+@AndroidEntryPoint
+class SecondFragment : Fragment() {
     @Inject
     lateinit var logger: Logger
 

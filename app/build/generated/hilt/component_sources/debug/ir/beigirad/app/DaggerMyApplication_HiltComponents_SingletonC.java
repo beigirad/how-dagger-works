@@ -313,13 +313,13 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
     }
 
     @Override
-    public void injectHomeFragment(HomeFragment homeFragment) {
-      injectHomeFragment2(homeFragment);
+    public void injectHomeFragment(HomeFragment arg0) {
+      injectHomeFragment2(arg0);
     }
 
     @Override
-    public void injectSecondFragment(SecondFragment secondFragment) {
-      injectSecondFragment2(secondFragment);
+    public void injectSecondFragment(SecondFragment arg0) {
+      injectSecondFragment2(arg0);
     }
 
     private HomeFragment injectHomeFragment2(HomeFragment instance) {
@@ -393,8 +393,8 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
     }
 
     @Override
-    public void injectMainActivity(MainActivity mainActivity) {
-      injectMainActivity2(mainActivity);
+    public void injectMainActivity(MainActivity arg0) {
+      injectMainActivity2(arg0);
     }
 
     private MainActivity injectMainActivity2(MainActivity instance) {
@@ -441,7 +441,7 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
 
     @SuppressWarnings("unchecked")
     private void initialize() {
-      this.lifecycleProvider = DoubleCheck.provider(ActivityRetainedComponentManager_Lifecycle_Factory.create());
+      this.lifecycleProvider = DoubleCheck.provider(new SwitchingProvider<Object>(singletonCImpl, activityRetainedCImpl, 0));
     }
 
     @Override
@@ -452,6 +452,32 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
     @Override
     public ActivityRetainedLifecycle getActivityRetainedLifecycle() {
       return (ActivityRetainedLifecycle) lifecycleProvider.get();
+    }
+
+    private static final class SwitchingProvider<T> implements Provider<T> {
+      private final SingletonCImpl singletonCImpl;
+
+      private final ActivityRetainedCImpl activityRetainedCImpl;
+
+      private final int id;
+
+      SwitchingProvider(SingletonCImpl singletonCImpl, ActivityRetainedCImpl activityRetainedCImpl,
+          int id) {
+        this.singletonCImpl = singletonCImpl;
+        this.activityRetainedCImpl = activityRetainedCImpl;
+        this.id = id;
+      }
+
+      @SuppressWarnings("unchecked")
+      @Override
+      public T get() {
+        switch (id) {
+          case 0: // dagger.hilt.android.internal.managers.ActivityRetainedComponentManager.Lifecycle 
+          return (T) ActivityRetainedComponentManager_Lifecycle_Factory.newInstance();
+
+          default: throw new AssertionError(id);
+        }
+      }
     }
   }
 
@@ -491,8 +517,8 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
     }
 
     @Override
-    public void injectMyApplication(MyApplication myApplication) {
-      injectMyApplication2(myApplication);
+    public void injectMyApplication(MyApplication arg0) {
+      injectMyApplication2(arg0);
     }
 
     private MyApplication injectMyApplication2(MyApplication instance) {

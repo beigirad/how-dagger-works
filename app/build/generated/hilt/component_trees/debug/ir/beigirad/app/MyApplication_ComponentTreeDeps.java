@@ -39,7 +39,6 @@ import hilt_aggregated_deps._ir_beigirad_app_MainActivity_GeneratedInjector;
 import hilt_aggregated_deps._ir_beigirad_app_MyApplication_GeneratedInjector;
 import hilt_aggregated_deps._ir_beigirad_app_screens_HomeFragment_GeneratedInjector;
 import hilt_aggregated_deps._ir_beigirad_app_screens_SecondFragment_GeneratedInjector;
-import javax.annotation.processing.Generated;
 
 @ComponentTreeDeps(
     rootDeps = _ir_beigirad_app_MyApplication.class,
@@ -85,6 +84,5 @@ import javax.annotation.processing.Generated;
         _ir_beigirad_app_screens_SecondFragment_GeneratedInjector.class
     }
 )
-@Generated("dagger.hilt.processor.internal.root.RootProcessor")
-class MyApplication_ComponentTreeDeps {
+public final class MyApplication_ComponentTreeDeps {
 }
