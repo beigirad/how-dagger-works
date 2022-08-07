@@ -19,6 +19,7 @@ import dagger.hilt.android.internal.lifecycle.DefaultViewModelFactories;
 import dagger.hilt.android.internal.lifecycle.DefaultViewModelFactories_InternalFactoryFactory_Factory;
 import dagger.hilt.android.internal.managers.ActivityRetainedComponentManager_Lifecycle_Factory;
 import dagger.hilt.android.internal.modules.ApplicationContextModule;
+import dagger.hilt.android.internal.modules.ApplicationContextModule_ProvideContextFactory;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.DoubleCheck;
 import dagger.internal.Preconditions;
@@ -50,20 +51,14 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
     return new Builder();
   }
 
-  public static MyApplication_HiltComponents.SingletonC create() {
-    return new Builder().build();
-  }
-
   public static final class Builder {
+    private ApplicationContextModule applicationContextModule;
+
     private Builder() {
     }
 
-    /**
-     * @deprecated This module is declared, but an instance is not used in the component. This method is a no-op. For more, see https://dagger.dev/unused-modules.
-     */
-    @Deprecated
     public Builder applicationContextModule(ApplicationContextModule applicationContextModule) {
-      Preconditions.checkNotNull(applicationContextModule);
+      this.applicationContextModule = Preconditions.checkNotNull(applicationContextModule);
       return this;
     }
 
@@ -78,7 +73,8 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
     }
 
     public MyApplication_HiltComponents.SingletonC build() {
-      return new SingletonCImpl();
+      Preconditions.checkBuilderRequirement(applicationContextModule, ApplicationContextModule.class);
+      return new SingletonCImpl(applicationContextModule);
     }
   }
 
@@ -323,12 +319,12 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
     }
 
     private HomeFragment injectHomeFragment2(HomeFragment instance) {
-      HomeFragment_MembersInjector.injectLogger(instance, new Logger());
+      HomeFragment_MembersInjector.injectLogger(instance, singletonCImpl.logger());
       return instance;
     }
 
     private SecondFragment injectSecondFragment2(SecondFragment instance) {
-      SecondFragment_MembersInjector.injectLogger(instance, new Logger());
+      SecondFragment_MembersInjector.injectLogger(instance, singletonCImpl.logger());
       return instance;
     }
   }
@@ -398,7 +394,7 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
     }
 
     private MainActivity injectMainActivity2(MainActivity instance) {
-      MainActivity_MembersInjector.injectLogger(instance, new Logger());
+      MainActivity_MembersInjector.injectLogger(instance, singletonCImpl.logger());
       return instance;
     }
   }
@@ -468,11 +464,17 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
   }
 
   private static final class SingletonCImpl extends MyApplication_HiltComponents.SingletonC {
+    private final ApplicationContextModule applicationContextModule;
+
     private final SingletonCImpl singletonCImpl = this;
 
-    private SingletonCImpl() {
+    private SingletonCImpl(ApplicationContextModule applicationContextModuleParam) {
+      this.applicationContextModule = applicationContextModuleParam;
 
+    }
 
+    private Logger logger() {
+      return new Logger(ApplicationContextModule_ProvideContextFactory.provideContext(applicationContextModule));
     }
 
     @Override
@@ -496,7 +498,7 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
     }
 
     private MyApplication injectMyApplication2(MyApplication instance) {
-      MyApplication_MembersInjector.injectLogger(instance, new Logger());
+      MyApplication_MembersInjector.injectLogger(instance, logger());
       return instance;
     }
   }
