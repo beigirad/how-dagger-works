@@ -14,14 +14,15 @@ import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import ir.beigirad.app.logger.Logger
 import ir.beigirad.app.toPx
+import javax.inject.Inject
 
 @AndroidEntryPoint(Fragment::class)
 class SecondFragment : Hilt_SecondFragment() {
+    @Inject
     lateinit var logger: Logger
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        logger = Logger()
         logger.say("onCreate $this: $savedInstanceState")
     }
 

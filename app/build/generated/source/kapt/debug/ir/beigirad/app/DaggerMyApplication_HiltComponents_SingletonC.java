@@ -24,7 +24,9 @@ import dagger.internal.DoubleCheck;
 import dagger.internal.Preconditions;
 import ir.beigirad.app.logger.Logger;
 import ir.beigirad.app.screens.HomeFragment;
+import ir.beigirad.app.screens.HomeFragment_MembersInjector;
 import ir.beigirad.app.screens.SecondFragment;
+import ir.beigirad.app.screens.SecondFragment_MembersInjector;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
@@ -312,10 +314,22 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
 
     @Override
     public void injectHomeFragment(HomeFragment homeFragment) {
+      injectHomeFragment2(homeFragment);
     }
 
     @Override
     public void injectSecondFragment(SecondFragment secondFragment) {
+      injectSecondFragment2(secondFragment);
+    }
+
+    private HomeFragment injectHomeFragment2(HomeFragment instance) {
+      HomeFragment_MembersInjector.injectLogger(instance, new Logger());
+      return instance;
+    }
+
+    private SecondFragment injectSecondFragment2(SecondFragment instance) {
+      SecondFragment_MembersInjector.injectLogger(instance, new Logger());
+      return instance;
     }
   }
 
