@@ -22,6 +22,7 @@ import dagger.hilt.android.internal.modules.ApplicationContextModule;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.DoubleCheck;
 import dagger.internal.Preconditions;
+import ir.beigirad.app.logger.Logger;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
@@ -457,6 +458,12 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
 
     @Override
     public void injectMyApplication(MyApplication myApplication) {
+      injectMyApplication2(myApplication);
+    }
+
+    private MyApplication injectMyApplication2(MyApplication instance) {
+      MyApplication_MembersInjector.injectLogger(instance, new Logger());
+      return instance;
     }
   }
 }
