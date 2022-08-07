@@ -11,10 +11,12 @@ import android.widget.TextView
 import androidx.core.view.setPadding
 import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
+import dagger.hilt.android.AndroidEntryPoint
 import ir.beigirad.app.logger.Logger
 import ir.beigirad.app.toPx
 
-class SecondFragment : Fragment() {
+@AndroidEntryPoint(Fragment::class)
+class SecondFragment : Hilt_SecondFragment() {
     lateinit var logger: Logger
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -43,6 +43,8 @@ import dagger.hilt.android.scopes.ViewScoped;
 import dagger.hilt.components.SingletonComponent;
 import dagger.hilt.internal.GeneratedComponent;
 import dagger.hilt.migration.DisableInstallInCheck;
+import ir.beigirad.app.screens.HomeFragment_GeneratedInjector;
+import ir.beigirad.app.screens.SecondFragment_GeneratedInjector;
 import javax.annotation.processing.Generated;
 import javax.inject.Singleton;
 
@@ -213,7 +215,9 @@ public final class MyApplication_HiltComponents {
   public abstract static class FragmentC implements FragmentComponent,
       DefaultViewModelFactories.FragmentEntryPoint,
       ViewComponentManager.ViewWithFragmentComponentBuilderEntryPoint,
-      GeneratedComponent {
+      GeneratedComponent,
+      HomeFragment_GeneratedInjector,
+      SecondFragment_GeneratedInjector {
     @Subcomponent.Builder
     abstract interface Builder extends FragmentComponentBuilder {
     }

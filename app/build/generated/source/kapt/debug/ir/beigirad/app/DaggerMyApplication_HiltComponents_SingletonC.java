@@ -23,6 +23,8 @@ import dagger.internal.DaggerGenerated;
 import dagger.internal.DoubleCheck;
 import dagger.internal.Preconditions;
 import ir.beigirad.app.logger.Logger;
+import ir.beigirad.app.screens.HomeFragment;
+import ir.beigirad.app.screens.SecondFragment;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
@@ -306,6 +308,14 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
     @Override
     public ViewWithFragmentComponentBuilder viewWithFragmentComponentBuilder() {
       return new ViewWithFragmentCBuilder(singletonCImpl, activityRetainedCImpl, activityCImpl, fragmentCImpl);
+    }
+
+    @Override
+    public void injectHomeFragment(HomeFragment homeFragment) {
+    }
+
+    @Override
+    public void injectSecondFragment(SecondFragment secondFragment) {
     }
   }
 

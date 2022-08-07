@@ -12,10 +12,12 @@ import androidx.core.view.setPadding
 import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import ir.beigirad.app.logger.Logger
 import ir.beigirad.app.toPx
 
-class HomeFragment : Fragment() {
+@AndroidEntryPoint(Fragment::class)
+class HomeFragment : Hilt_HomeFragment() {
     lateinit var logger: Logger
 
     override fun onCreate(savedInstanceState: Bundle?) {

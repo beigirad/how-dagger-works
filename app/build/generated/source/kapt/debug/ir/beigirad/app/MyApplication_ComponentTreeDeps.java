@@ -37,6 +37,8 @@ import hilt_aggregated_deps._dagger_hilt_android_internal_modules_ApplicationCon
 import hilt_aggregated_deps._dagger_hilt_android_internal_modules_HiltWrapper_ActivityModule;
 import hilt_aggregated_deps._ir_beigirad_app_MainActivity_GeneratedInjector;
 import hilt_aggregated_deps._ir_beigirad_app_MyApplication_GeneratedInjector;
+import hilt_aggregated_deps._ir_beigirad_app_screens_HomeFragment_GeneratedInjector;
+import hilt_aggregated_deps._ir_beigirad_app_screens_SecondFragment_GeneratedInjector;
 import javax.annotation.processing.Generated;
 
 @ComponentTreeDeps(
@@ -78,7 +80,9 @@ import javax.annotation.processing.Generated;
         _dagger_hilt_android_internal_modules_ApplicationContextModule.class,
         _dagger_hilt_android_internal_modules_HiltWrapper_ActivityModule.class,
         _ir_beigirad_app_MainActivity_GeneratedInjector.class,
-        _ir_beigirad_app_MyApplication_GeneratedInjector.class
+        _ir_beigirad_app_MyApplication_GeneratedInjector.class,
+        _ir_beigirad_app_screens_HomeFragment_GeneratedInjector.class,
+        _ir_beigirad_app_screens_SecondFragment_GeneratedInjector.class
     }
 )
 @Generated("dagger.hilt.processor.internal.root.RootProcessor")
