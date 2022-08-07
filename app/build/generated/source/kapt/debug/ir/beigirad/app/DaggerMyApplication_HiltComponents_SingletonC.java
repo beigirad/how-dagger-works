@@ -24,6 +24,7 @@ import dagger.internal.DaggerGenerated;
 import dagger.internal.DoubleCheck;
 import dagger.internal.Preconditions;
 import ir.beigirad.app.logger.Logger;
+import ir.beigirad.app.repository.Repository;
 import ir.beigirad.app.screens.HomeFragment;
 import ir.beigirad.app.screens.HomeFragment_MembersInjector;
 import ir.beigirad.app.screens.SecondFragment;
@@ -280,6 +281,8 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
   }
 
   private static final class FragmentCImpl extends MyApplication_HiltComponents.FragmentC {
+    private final Fragment fragment;
+
     private final SingletonCImpl singletonCImpl;
 
     private final ActivityRetainedCImpl activityRetainedCImpl;
@@ -294,8 +297,12 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
       this.singletonCImpl = singletonCImpl;
       this.activityRetainedCImpl = activityRetainedCImpl;
       this.activityCImpl = activityCImpl;
+      this.fragment = fragmentParam;
 
+    }
 
+    private Repository repository() {
+      return new Repository(fragment);
     }
 
     @Override
@@ -320,6 +327,7 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
 
     private HomeFragment injectHomeFragment2(HomeFragment instance) {
       HomeFragment_MembersInjector.injectLogger(instance, singletonCImpl.logger());
+      HomeFragment_MembersInjector.injectRepository(instance, repository());
       return instance;
     }
 

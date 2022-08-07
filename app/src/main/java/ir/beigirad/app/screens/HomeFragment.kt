@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ir.beigirad.app.logger.Logger
+import ir.beigirad.app.repository.Repository
 import ir.beigirad.app.toPx
 import javax.inject.Inject
 
@@ -21,6 +22,9 @@ import javax.inject.Inject
 class HomeFragment : Hilt_HomeFragment() {
     @Inject
     lateinit var logger: Logger
+
+    @Inject
+    lateinit var repository: Repository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

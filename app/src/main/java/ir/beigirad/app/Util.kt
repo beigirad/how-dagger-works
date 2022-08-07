@@ -12,3 +12,5 @@ fun NavController.backStackString(): String =
     )
 
 val Int.toPx get() = (this * Resources.getSystem().displayMetrics.density).toInt()
+
+fun Any.hashString(): String = "@${this.hashCode().toString(16)}"
