@@ -10,14 +10,15 @@ import dagger.hilt.android.AndroidEntryPoint
 import ir.beigirad.app.logger.Logger
 import ir.beigirad.app.screens.HomeFragment
 import ir.beigirad.app.screens.SecondFragment
+import javax.inject.Inject
 
 @AndroidEntryPoint(AppCompatActivity::class)
 class MainActivity : Hilt_MainActivity() {
+    @Inject
     lateinit var logger: Logger
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        logger = Logger()
         logger.say("onCreate $this: $savedInstanceState")
 
         val rootView = FragmentContainerView(this).apply { id = R.id.container_id }

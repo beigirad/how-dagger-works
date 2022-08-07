@@ -370,6 +370,12 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
 
     @Override
     public void injectMainActivity(MainActivity mainActivity) {
+      injectMainActivity2(mainActivity);
+    }
+
+    private MainActivity injectMainActivity2(MainActivity instance) {
+      MainActivity_MembersInjector.injectLogger(instance, new Logger());
+      return instance;
     }
   }
 
