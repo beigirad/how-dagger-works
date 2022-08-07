@@ -13,6 +13,7 @@ import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import ir.beigirad.app.logger.Logger
+import ir.beigirad.app.repository.Repository
 import ir.beigirad.app.toPx
 import javax.inject.Inject
 
@@ -20,6 +21,9 @@ import javax.inject.Inject
 class SecondFragment : Hilt_SecondFragment() {
     @Inject
     lateinit var logger: Logger
+
+    @Inject
+    lateinit var repository: Repository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

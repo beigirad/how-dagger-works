@@ -316,8 +316,8 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
     }
 
     @Override
-    public void injectHomeFragment(HomeFragment homeFragment) {
-      injectHomeFragment2(homeFragment);
+    public void injectHomeFragment(HomeFragment arg0) {
+      injectHomeFragment2(arg0);
     }
 
     @Override
@@ -333,6 +333,7 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
 
     private SecondFragment injectSecondFragment2(SecondFragment instance) {
       SecondFragment_MembersInjector.injectLogger(instance, singletonCImpl.logger());
+      SecondFragment_MembersInjector.injectRepository(instance, repository());
       return instance;
     }
   }
