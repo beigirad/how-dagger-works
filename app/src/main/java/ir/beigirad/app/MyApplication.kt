@@ -1,9 +1,11 @@
 package ir.beigirad.app
 
 import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 import ir.beigirad.app.logger.Logger
 
-class MyApplication : Application() {
+@HiltAndroidApp(Application::class)
+class MyApplication : Hilt_MyApplication() {
     lateinit var logger: Logger
 
     override fun onCreate() {
