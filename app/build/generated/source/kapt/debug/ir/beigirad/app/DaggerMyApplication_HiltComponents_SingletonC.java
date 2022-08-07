@@ -367,6 +367,10 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
     public ViewComponentBuilder viewComponentBuilder() {
       return new ViewCBuilder(singletonCImpl, activityRetainedCImpl, activityCImpl);
     }
+
+    @Override
+    public void injectMainActivity(MainActivity mainActivity) {
+    }
   }
 
   private static final class ViewModelCImpl extends MyApplication_HiltComponents.ViewModelC {

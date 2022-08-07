@@ -6,11 +6,13 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.createGraph
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.fragment
+import dagger.hilt.android.AndroidEntryPoint
 import ir.beigirad.app.logger.Logger
 import ir.beigirad.app.screens.HomeFragment
 import ir.beigirad.app.screens.SecondFragment
 
-class MainActivity : AppCompatActivity() {
+@AndroidEntryPoint(AppCompatActivity::class)
+class MainActivity : Hilt_MainActivity() {
     lateinit var logger: Logger
 
     override fun onCreate(savedInstanceState: Bundle?) {

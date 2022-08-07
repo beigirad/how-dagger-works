@@ -178,7 +178,8 @@ public final class MyApplication_HiltComponents {
       HiltWrapper_HiltViewModelFactory_ActivityCreatorEntryPoint,
       FragmentComponentManager.FragmentComponentBuilderEntryPoint,
       ViewComponentManager.ViewComponentBuilderEntryPoint,
-      GeneratedComponent {
+      GeneratedComponent,
+      MainActivity_GeneratedInjector {
     @Subcomponent.Builder
     abstract interface Builder extends ActivityComponentBuilder {
     }

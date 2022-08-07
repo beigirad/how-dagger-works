@@ -35,6 +35,7 @@ import hilt_aggregated_deps._dagger_hilt_android_internal_managers_ViewComponent
 import hilt_aggregated_deps._dagger_hilt_android_internal_managers_ViewComponentManager_ViewWithFragmentComponentBuilderEntryPoint;
 import hilt_aggregated_deps._dagger_hilt_android_internal_modules_ApplicationContextModule;
 import hilt_aggregated_deps._dagger_hilt_android_internal_modules_HiltWrapper_ActivityModule;
+import hilt_aggregated_deps._ir_beigirad_app_MainActivity_GeneratedInjector;
 import hilt_aggregated_deps._ir_beigirad_app_MyApplication_GeneratedInjector;
 import javax.annotation.processing.Generated;
 
@@ -76,6 +77,7 @@ import javax.annotation.processing.Generated;
         _dagger_hilt_android_internal_managers_ViewComponentManager_ViewWithFragmentComponentBuilderEntryPoint.class,
         _dagger_hilt_android_internal_modules_ApplicationContextModule.class,
         _dagger_hilt_android_internal_modules_HiltWrapper_ActivityModule.class,
+        _ir_beigirad_app_MainActivity_GeneratedInjector.class,
         _ir_beigirad_app_MyApplication_GeneratedInjector.class
     }
 )
