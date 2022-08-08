@@ -2,6 +2,7 @@ package ir.beigirad.app;
 
 import android.app.Activity;
 import android.app.Service;
+import android.content.Context;
 import android.view.View;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.SavedStateHandle;
@@ -24,11 +25,13 @@ import dagger.internal.DaggerGenerated;
 import dagger.internal.DoubleCheck;
 import dagger.internal.Preconditions;
 import ir.beigirad.app.logger.Logger;
+import ir.beigirad.app.logger.Logger_Factory;
 import ir.beigirad.app.repository.Repository;
 import ir.beigirad.app.screens.HomeFragment;
 import ir.beigirad.app.screens.HomeFragment_MembersInjector;
 import ir.beigirad.app.screens.SecondFragment;
 import ir.beigirad.app.screens.SecondFragment_MembersInjector;
+import ir.beigirad.app.viewmodel.HomeViewModel;
 import ir.beigirad.app.viewmodel.HomeViewModel_Factory;
 import ir.beigirad.app.viewmodel.HomeViewModel_HiltModules_KeyModule_ProvideFactory;
 import java.util.Collections;
@@ -318,8 +321,8 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
     }
 
     @Override
-    public void injectHomeFragment(HomeFragment arg0) {
-      injectHomeFragment2(arg0);
+    public void injectHomeFragment(HomeFragment homeFragment) {
+      injectHomeFragment2(homeFragment);
     }
 
     @Override
@@ -417,17 +420,25 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
 
     private final ViewModelCImpl viewModelCImpl = this;
 
+    private Provider<HomeViewModel> homeViewModelProvider;
+
     private ViewModelCImpl(SingletonCImpl singletonCImpl,
         ActivityRetainedCImpl activityRetainedCImpl, SavedStateHandle savedStateHandleParam) {
       this.singletonCImpl = singletonCImpl;
       this.activityRetainedCImpl = activityRetainedCImpl;
 
+      initialize(savedStateHandleParam);
 
+    }
+
+    @SuppressWarnings("unchecked")
+    private void initialize(final SavedStateHandle savedStateHandleParam) {
+      this.homeViewModelProvider = HomeViewModel_Factory.create(singletonCImpl.loggerProvider);
     }
 
     @Override
     public Map<String, Provider<ViewModel>> getHiltViewModelMap() {
-      return Collections.<String, Provider<ViewModel>>singletonMap("ir.beigirad.app.viewmodel.HomeViewModel", ((Provider) HomeViewModel_Factory.create()));
+      return Collections.<String, Provider<ViewModel>>singletonMap("ir.beigirad.app.viewmodel.HomeViewModel", ((Provider) homeViewModelProvider));
     }
   }
 
@@ -479,13 +490,24 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
 
     private final SingletonCImpl singletonCImpl = this;
 
+    private Provider<Context> provideContextProvider;
+
+    private Provider<Logger> loggerProvider;
+
     private SingletonCImpl(ApplicationContextModule applicationContextModuleParam) {
       this.applicationContextModule = applicationContextModuleParam;
+      initialize(applicationContextModuleParam);
 
     }
 
     private Logger logger() {
       return new Logger(ApplicationContextModule_ProvideContextFactory.provideContext(applicationContextModule));
+    }
+
+    @SuppressWarnings("unchecked")
+    private void initialize(final ApplicationContextModule applicationContextModuleParam) {
+      this.provideContextProvider = ApplicationContextModule_ProvideContextFactory.create(applicationContextModuleParam);
+      this.loggerProvider = Logger_Factory.create(provideContextProvider);
     }
 
     @Override

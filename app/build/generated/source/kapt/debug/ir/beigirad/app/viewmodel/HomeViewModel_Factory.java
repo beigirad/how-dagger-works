@@ -4,7 +4,9 @@ import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import dagger.internal.QualifierMetadata;
 import dagger.internal.ScopeMetadata;
+import ir.beigirad.app.logger.Logger;
 import javax.annotation.processing.Generated;
+import javax.inject.Provider;
 
 @ScopeMetadata
 @QualifierMetadata
@@ -18,20 +20,22 @@ import javax.annotation.processing.Generated;
     "rawtypes"
 })
 public final class HomeViewModel_Factory implements Factory<HomeViewModel> {
+  private final Provider<Logger> loggerProvider;
+
+  public HomeViewModel_Factory(Provider<Logger> loggerProvider) {
+    this.loggerProvider = loggerProvider;
+  }
+
   @Override
   public HomeViewModel get() {
-    return newInstance();
+    return newInstance(loggerProvider.get());
   }
 
-  public static HomeViewModel_Factory create() {
-    return InstanceHolder.INSTANCE;
+  public static HomeViewModel_Factory create(Provider<Logger> loggerProvider) {
+    return new HomeViewModel_Factory(loggerProvider);
   }
 
-  public static HomeViewModel newInstance() {
-    return new HomeViewModel();
-  }
-
-  private static final class InstanceHolder {
-    private static final HomeViewModel_Factory INSTANCE = new HomeViewModel_Factory();
+  public static HomeViewModel newInstance(Logger logger) {
+    return new HomeViewModel(logger);
   }
 }
