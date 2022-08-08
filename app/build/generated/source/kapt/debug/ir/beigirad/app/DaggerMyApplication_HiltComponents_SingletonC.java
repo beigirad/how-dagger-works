@@ -29,6 +29,8 @@ import ir.beigirad.app.screens.HomeFragment;
 import ir.beigirad.app.screens.HomeFragment_MembersInjector;
 import ir.beigirad.app.screens.SecondFragment;
 import ir.beigirad.app.screens.SecondFragment_MembersInjector;
+import ir.beigirad.app.viewmodel.HomeViewModel_Factory;
+import ir.beigirad.app.viewmodel.HomeViewModel_HiltModules_KeyModule_ProvideFactory;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
@@ -374,12 +376,12 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
 
     @Override
     public DefaultViewModelFactories.InternalFactoryFactory getHiltInternalFactoryFactory() {
-      return DefaultViewModelFactories_InternalFactoryFactory_Factory.newInstance(Collections.<String>emptySet(), new ViewModelCBuilder(singletonCImpl, activityRetainedCImpl));
+      return DefaultViewModelFactories_InternalFactoryFactory_Factory.newInstance(getViewModelKeys(), new ViewModelCBuilder(singletonCImpl, activityRetainedCImpl));
     }
 
     @Override
     public Set<String> getViewModelKeys() {
-      return Collections.<String>emptySet();
+      return Collections.<String>singleton(HomeViewModel_HiltModules_KeyModule_ProvideFactory.provide());
     }
 
     @Override
@@ -425,7 +427,7 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
 
     @Override
     public Map<String, Provider<ViewModel>> getHiltViewModelMap() {
-      return Collections.<String, Provider<ViewModel>>emptyMap();
+      return Collections.<String, Provider<ViewModel>>singletonMap("ir.beigirad.app.viewmodel.HomeViewModel", ((Provider) HomeViewModel_Factory.create()));
     }
   }
 

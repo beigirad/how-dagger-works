@@ -45,6 +45,7 @@ import dagger.hilt.internal.GeneratedComponent;
 import dagger.hilt.migration.DisableInstallInCheck;
 import ir.beigirad.app.screens.HomeFragment_GeneratedInjector;
 import ir.beigirad.app.screens.SecondFragment_GeneratedInjector;
+import ir.beigirad.app.viewmodel.HomeViewModel_HiltModules;
 import javax.annotation.processing.Generated;
 import javax.inject.Singleton;
 
@@ -152,6 +153,7 @@ public final class MyApplication_HiltComponents {
   @Subcomponent(
       modules = {
           HiltWrapper_ActivityRetainedComponentManager_LifecycleModule.class,
+          HomeViewModel_HiltModules.KeyModule.class,
           ActivityCBuilderModule.class,
           ViewModelCBuilderModule.class
       }
@@ -188,7 +190,10 @@ public final class MyApplication_HiltComponents {
   }
 
   @Subcomponent(
-      modules = HiltWrapper_HiltViewModelFactory_ViewModelModule.class
+      modules = {
+          HiltWrapper_HiltViewModelFactory_ViewModelModule.class,
+          HomeViewModel_HiltModules.BindsModule.class
+      }
   )
   @ViewModelScoped
   public abstract static class ViewModelC implements ViewModelComponent,
