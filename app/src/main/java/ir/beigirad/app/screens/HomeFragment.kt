@@ -11,11 +11,14 @@ import android.widget.TextView
 import androidx.core.view.setPadding
 import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ir.beigirad.app.logger.Logger
 import ir.beigirad.app.repository.Repository
 import ir.beigirad.app.toPx
+import ir.beigirad.app.viewmodel.HomeViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint(Fragment::class)
@@ -26,9 +29,13 @@ class HomeFragment : Hilt_HomeFragment() {
     @Inject
     lateinit var repository: Repository
 
+    lateinit var viewmodel: HomeViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         logger.say("onCreate $this: $savedInstanceState")
+
+        viewmodel = ViewModelProvider(this).get()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
